@@ -1,5 +1,6 @@
 import { Button, IconButton } from "~/client/shared/ui/button";
 import { SendHorizontal, Trash2 } from "lucide-react";
+import { Spinner } from "~/client/shared/ui/spinner";
 
 const variants = ["text", "contained", "outlined"] as const;
 const colors = [
@@ -69,6 +70,22 @@ export default function ButtonPage() {
       <div>
         <h2 className="typo-subtitle1">Buttons with icons and label</h2>
         <div className="flex flex-row gap-2">
+          <Button variant="contained" startIcon={<Trash2 size={20} />} loading>
+            Delete
+          </Button>
+          <Button
+            variant="contained"
+            endIcon={<SendHorizontal size={20} />}
+            loading
+          >
+            Send
+          </Button>
+        </div>
+      </div>
+
+      <div>
+        <h2 className="typo-subtitle1">Buttons with icons and label</h2>
+        <div className="flex flex-row gap-2">
           <Button variant="contained" startIcon={<Trash2 size={20} />}>
             Delete
           </Button>
@@ -103,6 +120,23 @@ export default function ButtonPage() {
             </IconButton>
           ))}
         </div>
+      </div>
+
+      <div>
+        <h2 className="typo-h6">Loading</h2>
+        <div className="flex flex-row items-center gap-2">
+          {sizes.map((size) => (
+            <IconButton key={size} aria-label="delete" size={size} loading>
+              <Trash2 />
+            </IconButton>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex flex-row items-center gap-2">
+        <Spinner size="small" />
+        <Spinner size="medium" />
+        <Spinner size="large" />
       </div>
     </div>
   );

@@ -1,8 +1,10 @@
 import { ComponentProps } from "react";
 import { Button } from "./Button";
 import { twMerge } from "tailwind-merge";
+import { Spinner } from "../spinner";
 
 export interface IconButtonProps extends ComponentProps<"button"> {
+  loading?: boolean;
   size?: "small" | "medium" | "large";
   color?:
     | "primary"
@@ -33,6 +35,8 @@ const iconButtonSize: Record<string, string> = {
 export const IconButton = ({
   children,
   className,
+  disabled = false,
+  loading = false,
   size = "medium",
   color = "default",
   ...props
@@ -46,9 +50,10 @@ export const IconButton = ({
         className,
       )}
       variant="text"
+      disabled={disabled || loading}
       {...props}
     >
-      {children}
+      {loading ? <Spinner size="medium" /> : <span>{children}</span>}
     </Button>
   );
 };

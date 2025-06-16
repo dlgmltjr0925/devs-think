@@ -44,7 +44,7 @@
 }
 
 @utility button-* {
-  @apply relative inline-flex items-center justify-center rounded-md cursor-pointer size-fit uppercase typo-button box-border transition-colors duration-200;
+  @apply relative inline-flex items-center justify-center gap-2 rounded-md cursor-pointer size-fit uppercase typo-button box-border transition-colors duration-200;
 
   &:disabled {
     background: --value(--button-variant-disabled-background-*) !important;
@@ -69,14 +69,14 @@
 }
 
 @utility button-contained-* {
-  background: --value(--button-color-*) !important;
+  background: --value(--button-color-*);
   color: --value(--button-color-contrast-text-*);
   border: transparent 1px solid;
   &:hover {
-    background: color-mix(in srgb, --value(--button-color-*) 90%, transparent) !important;
+    background: color-mix(in srgb, --value(--button-color-*) 90%, transparent); 
   }
   &:active {
-    background: color-mix(in srgb, --value(--button-color-*) 80%, transparent) !important;
+    background: color-mix(in srgb, --value(--button-color-*) 80%, transparent);
   }
 }
 

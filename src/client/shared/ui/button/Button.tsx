@@ -8,6 +8,9 @@ export interface ButtonProps extends ComponentProps<"button"> {
   size?: "small" | "medium" | "large";
   startIcon?: React.ReactNode;
   endIcon?: React.ReactNode;
+  loading?: boolean;
+  loadingIndicator?: React.ReactNode;
+  loadingPosition?: "start" | "end";
 }
 
 const buttonVariants: Record<string, string> = {
@@ -46,6 +49,8 @@ const buttonSize: Record<string, string> = {
 export const Button = ({
   children,
   className,
+  disabled = false,
+  loading = false,
   variant = "text",
   color = "primary",
   size = "medium",
@@ -62,11 +67,12 @@ export const Button = ({
         buttonSize[size],
         className,
       )}
+      disabled={disabled || loading}
       {...props}
     >
-      {startIcon && <span className="mr-2">{startIcon}</span>}
-      {children}
-      {endIcon && <span className="ml-2">{endIcon}</span>}
+      {startIcon && <span>{startIcon}</span>}
+      <span>{children}</span>
+      {endIcon && <span>{endIcon}</span>}
     </button>
   );
 };

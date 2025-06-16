@@ -137,3 +137,7 @@
 @utility border-* {
   border-color: --value(--color-*);
 }
+
+@utility stroke-* {
+  stroke: --value(--color-*);
+}
