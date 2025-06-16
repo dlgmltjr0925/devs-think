@@ -1,37 +1,14 @@
-:root {
-  --mobile-stepper-z: 1000;
-  --fab-z: 1050;
-  --speed-dial-z: 1050;
-  --app-bar-z: 1100;
-  --drawer-z: 1200;
-  --modal-z: 1300;
-  --snackbar-z: 1400;
-  --tooltip-z: 1500;
+@theme inline {
+  --z-mobile-stepper: 1000;
+  --z-fab: 1050;
+  --z-speed-dial: 1050;
+  --z-app-bar: 1100;
+  --z-drawer: 1200;
+  --z-modal: 1300;
+  --z-snackbar: 1400;
+  --z-tooltip: 1500;
 }
 
-@layer utilities {
-  .z-mobile-stepper {
-    z-index: var(--mobile-stepper-z);
-  }
-  .z-fab {
-    z-index: var(--fab-z);
-  }
-  .z-speed-dial {
-    z-index: var(--speed-dial-z);
-  }
-  .z-app-bar {
-    z-index: var(--app-bar-z);
-  }
-  .z-drawer {
-    z-index: var(--drawer-z);
-  }
-  .z-modal {
-    z-index: var(--modal-z);
-  }
-  .z-snackbar {
-    z-index: var(--snackbar-z);
-  }
-  .z-tooltip {
-    z-index: var(--tooltip-z);
-  }
+@utility z-* {
+  z-index: --value(--z-*);
 }

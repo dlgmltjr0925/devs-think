@@ -66,31 +66,37 @@
 
 @theme inline {
   --color-primary-main: var(--palette-primary-main);
+  --color-primary: var(--palette-primary-main);
   --color-primary-light: var(--palette-primary-light);
   --color-primary-dark: var(--palette-primary-dark);
   --color-primary-contrast-text: var(--palette-primary-contrast-text);
 
   --color-secondary-main: var(--palette-secondary-main);
+  --color-secondary: var(--palette-secondary-main);
   --color-secondary-light: var(--palette-secondary-light);
   --color-secondary-dark: var(--palette-secondary-dark);
   --color-secondary-contrast-text: var(--palette-secondary-contrast-text);
 
   --color-error-main: var(--palette-error-main);
+  --color-error: var(--palette-error-main);
   --color-error-light: var(--palette-error-light);
   --color-error-dark: var(--palette-error-dark);
   --color-error-contrast-text: var(--palette-error-contrast-text);
 
   --color-warning-main: var(--palette-warning-main);
+  --color-warning: var(--palette-warning-main);
   --color-warning-light: var(--palette-warning-light);
   --color-warning-dark: var(--palette-warning-dark);
   --color-warning-contrast-text: var(--palette-warning-contrast-text);
 
   --color-success-main: var(--palette-success-main);
+  --color-success: var(--palette-success-main);
   --color-success-light: var(--palette-success-light);
   --color-success-dark: var(--palette-success-dark);
   --color-success-contrast-text: var(--palette-success-contrast-text);
 
   --color-info-main: var(--palette-info-main);
+  --color-info: var(--palette-info-main);
   --color-info-light: var(--palette-info-light);
   --color-info-dark: var(--palette-info-dark);
   --color-info-contrast-text: var(--palette-info-contrast-text);
