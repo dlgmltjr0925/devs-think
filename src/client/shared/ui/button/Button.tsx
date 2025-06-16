@@ -45,6 +45,7 @@ const buttonSize: Record<string, string> = {
 
 export const Button = ({
   children,
+  className,
   variant = "text",
   color = "primary",
   size = "medium",
@@ -59,6 +60,7 @@ export const Button = ({
         buttonVariants[variant],
         buttonColors[`${variant}-${color}`],
         buttonSize[size],
+        className,
       )}
       {...props}
     >

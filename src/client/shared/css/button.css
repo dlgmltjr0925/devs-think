@@ -19,6 +19,7 @@
   --button-color-warning: var(--color-warning);
   --button-color-success: var(--color-success);
   --button-color-info: var(--color-info);
+  --button-color-default: var(--color-foreground);
   --button-color-contrast-text-primary: var(--color-primary-contrast-text);
   --button-color-contrast-text-secondary: var(--color-secondary-contrast-text);
   --button-color-contrast-text-error: var(--color-error-contrast-text);
@@ -32,6 +33,14 @@
   --button-size-font-size-small: var(--text-sm);
   --button-size-font-size-medium: var(--text-base);
   --button-size-font-size-large: var(--text-lg);
+
+  --icon-button-size-padding-small: 0.5rem;
+  --icon-button-size-padding-medium: 0.625rem;
+  --icon-button-size-padding-large: 0.75rem;
+
+  --icon-button-size-font-size-small: var(--text-lg);
+  --icon-button-size-font-size-medium: var(--text-xl);
+  --icon-button-size-font-size-large: var(--text-2xl);
 }
 
 @utility button-* {
@@ -86,4 +95,26 @@
 @utility button-size-* {
   padding: --value(--button-size-padding-*);
   font-size: --value(--button-size-font-size-*);
+}
+
+@utility icon-button {
+  @apply rounded-full min-w-0 min-h-0;
+}
+
+@utility icon-button-color-* {
+  color: --value(--button-color-*) !important;
+  &:hover {
+    background: color-mix(in srgb, --value(--button-color-*) 10%, transparent);
+  }
+  &:active {
+    background: color-mix(in srgb, --value(--button-color-*) 20%, transparent);
+  }
+}
+
+@utility icon-button-size-* {
+  padding: --value(--icon-button-size-padding-*) !important;
+  svg {
+    width: --value(--icon-button-size-font-size-*) !important;
+    height: --value(--icon-button-size-font-size-*) !important;
+  }
 }
