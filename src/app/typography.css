@@ -1,0 +1,116 @@
+@layer utilities {
+  /* Typography 유틸리티 */
+  .text-h1 {
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: var(--font-weight-light);
+    font-size: var(--text-8xl);
+    line-height: 1.167;
+    letter-spacing: -0.01562em;
+  }
+
+  .text-h2 {
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: var(--font-weight-light);
+    font-size: var(--text-6xl);
+    line-height: 1.2;
+    letter-spacing: -0.00833em;
+  }
+
+  .text-h3 {
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: var(--font-weight-normal);
+    font-size: var(--text-5xl);
+    line-height: 1.167;
+    letter-spacing: 0em;
+  }
+
+  .text-h4 {
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: var(--font-weight-normal);
+    font-size: var(--text-4xl);
+    line-height: 1.235;
+    letter-spacing: 0.00735em;
+  }
+
+  .text-h5 {
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: var(--font-weight-normal);
+    font-size: var(--text-2xl);
+    line-height: 1.334;
+    letter-spacing: 0em;
+  }
+
+  .text-h6 {
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: var(--font-weight-medium);
+    font-size: var(--text-xl);
+    line-height: 1.6;
+    letter-spacing: 0.0075em;
+  }
+
+  .text-subtitle1 {
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: var(--font-weight-normal);
+    font-size: var(--text-base);
+    line-height: 1.75;
+    letter-spacing: 0.00938em;
+  }
+
+  .text-subtitle2 {
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: var(--font-weight-medium);
+    font-size: var(--text-sm);
+    line-height: 1.57;
+    letter-spacing: 0.00714em;
+  }
+
+  .text-body1 {
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: var(--font-weight-normal);
+    font-size: var(--text-base);
+    line-height: 1.5;
+    letter-spacing: 0.00938em;
+  }
+
+  .text-body2 {
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: var(--font-weight-normal);
+    font-size: var(--text-sm);
+    line-height: 1.43;
+    letter-spacing: 0.01071em;
+  }
+
+  .text-button {
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: var(--font-weight-medium);
+    font-size: var(--text-sm);
+    line-height: 1.75;
+    letter-spacing: 0.02857em;
+    text-transform: uppercase;
+  }
+
+  .text-caption {
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: var(--font-weight-normal);
+    font-size: var(--text-xs);
+    line-height: 1.66;
+    letter-spacing: 0.03333em;
+  }
+
+  .text-overline {
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: var(--font-weight-normal);
+    font-size: var(--text-xs);
+    line-height: 2.66;
+    letter-spacing: 0.08333em;
+    text-transform: uppercase;
+  }
+
+  .text-inherit {
+    font-family: inherit;
+    font-weight: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+  }
+}
