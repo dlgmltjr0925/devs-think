@@ -28,6 +28,12 @@
   --palette-info-light: var(--color-blue-400);
   --palette-info-dark: var(--color-blue-600);
   --palette-info-contrast-text: var(--color-white);
+
+  --palette-text-primary: rgba(0, 0, 0, 0.87);
+  --palette-text-secondary: rgba(0, 0, 0, 0.6);
+  --palette-text-disabled: rgba(0, 0, 0, 0.38);
+
+  --palette-divider: rgba(0, 0, 0, 0.12);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -61,6 +67,12 @@
     --palette-info-light: var(--color-blue-300);
     --palette-info-dark: var(--color-blue-500);
     --palette-info-contrast-text: var(--color-black);
+
+    --palette-text-primary: #fff;
+    --palette-text-secondary: rgba(255, 255, 255, 0.7);
+    --palette-text-disabled: rgba(255, 255, 255, 0.5);
+
+    --palette-divider: rgba(255, 255, 255, 0.12);
   }
 }
 
@@ -100,14 +112,26 @@
   --color-info-light: var(--palette-info-light);
   --color-info-dark: var(--palette-info-dark);
   --color-info-contrast-text: var(--palette-info-contrast-text);
+
+  --color-text-primary: var(--palette-text-primary);
+  --color-text-secondary: var(--palette-text-secondary);
+  --color-text-disabled: var(--palette-text-disabled);
+
+  --color-divider: var(--palette-divider);
 }
 
 @utility bg-* {
   background-color: --value(--color-*);
 }
 
+
 @utility text-* {
   color: --value(--color-*);
+}
+
+
+@utility text-color-* {
+  color: --value(--color-text-*);
 }
 
 @utility border-* {
