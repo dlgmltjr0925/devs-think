@@ -1,116 +1,73 @@
-@layer utilities {
-  /* Typography 유틸리티 */
-  .text-h1 {
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    font-weight: var(--font-weight-light);
-    font-size: var(--text-8xl);
-    line-height: 1.167;
-    letter-spacing: -0.01562em;
-  }
+@theme {
+  --font-weight-h1: var(--font-weight-light);
+  --font-size-h1: 6rem;
+  --line-height-h1: 1.167;
+  --letter-spacing-h1: -0.01562em;
 
-  .text-h2 {
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    font-weight: var(--font-weight-light);
-    font-size: var(--text-6xl);
-    line-height: 1.2;
-    letter-spacing: -0.00833em;
-  }
+  --font-weight-h2: var(--font-weight-light);
+  --font-size-h2: 3.75rem;
+  --line-height-h2: 1.2;
+  --letter-spacing-h2: -0.00833em;
 
-  .text-h3 {
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    font-weight: var(--font-weight-normal);
-    font-size: var(--text-5xl);
-    line-height: 1.167;
-    letter-spacing: 0em;
-  }
+  --font-weight-h3: var(--font-weight-normal);
+  --font-size-h3: 3rem;
+  --line-height-h3: 1.167;
+  --letter-spacing-h3: 0em;
 
-  .text-h4 {
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    font-weight: var(--font-weight-normal);
-    font-size: var(--text-4xl);
-    line-height: 1.235;
-    letter-spacing: 0.00735em;
-  }
+  --font-weight-h4: var(--font-weight-normal);
+  --font-size-h4: 2.125rem;
+  --line-height-h4: 1.235;
+  --letter-spacing-h4: 0.00735em;
 
-  .text-h5 {
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    font-weight: var(--font-weight-normal);
-    font-size: var(--text-2xl);
-    line-height: 1.334;
-    letter-spacing: 0em;
-  }
+  --font-weight-h5: var(--font-weight-normal);
+  --font-size-h5: 1.5rem;
+  --line-height-h5: 1.334;
+  --letter-spacing-h5: 0em;
 
-  .text-h6 {
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    font-weight: var(--font-weight-medium);
-    font-size: var(--text-xl);
-    line-height: 1.6;
-    letter-spacing: 0.0075em;
-  }
+  --font-weight-h6: var(--font-weight-medium);
+  --font-size-h6: 1.25rem;
+  --line-height-h6: 1.6;
+  --letter-spacing-h6: 0.0075em;
 
-  .text-subtitle1 {
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    font-weight: var(--font-weight-normal);
-    font-size: var(--text-base);
-    line-height: 1.75;
-    letter-spacing: 0.00938em;
-  }
+  --font-weight-subtitle1: var(--font-weight-normal);
+  --font-size-subtitle1: 1rem;
+  --line-height-subtitle1: 1.75;
+  --letter-spacing-subtitle1: 0.00938em;
 
-  .text-subtitle2 {
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    font-weight: var(--font-weight-medium);
-    font-size: var(--text-sm);
-    line-height: 1.57;
-    letter-spacing: 0.00714em;
-  }
+  --font-weight-subtitle2: var(--font-weight-medium);
+  --font-size-subtitle2: 0.875rem;
+  --line-height-subtitle2: 1.57;
+  --letter-spacing-subtitle2: 0.00714em;
 
-  .text-body1 {
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    font-weight: var(--font-weight-normal);
-    font-size: var(--text-base);
-    line-height: 1.5;
-    letter-spacing: 0.00938em;
-  }
+  --font-weight-body1: var(--font-weight-normal);
+  --font-size-body1: 1rem;
+  --line-height-body1: 1.5;
+  --letter-spacing-body1: 0.00938em;
 
-  .text-body2 {
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    font-weight: var(--font-weight-normal);
-    font-size: var(--text-sm);
-    line-height: 1.43;
-    letter-spacing: 0.01071em;
-  }
+  --font-weight-body2: var(--font-weight-normal);
+  --font-size-body2: 0.875rem;
+  --line-height-body2: 1.43;
+  --letter-spacing-body2: 0.01071em;
 
-  .text-button {
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    font-weight: var(--font-weight-medium);
-    font-size: var(--text-sm);
-    line-height: 1.75;
-    letter-spacing: 0.02857em;
-    text-transform: uppercase;
-  }
+  --font-weight-button: var(--font-weight-medium);
+  --font-size-button: 0.875rem;
+  --line-height-button: 1.75;
+  --letter-spacing-button: 0.02857em;
 
-  .text-caption {
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    font-weight: var(--font-weight-normal);
-    font-size: var(--text-xs);
-    line-height: 1.66;
-    letter-spacing: 0.03333em;
-  }
+  --font-weight-caption: var(--font-weight-normal);
+  --font-size-caption: 0.75rem;
+  --line-height-caption: 1.66;
+  --letter-spacing-caption: 0.03333em;
 
-  .text-overline {
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    font-weight: var(--font-weight-normal);
-    font-size: var(--text-xs);
-    line-height: 2.66;
-    letter-spacing: 0.08333em;
-    text-transform: uppercase;
-  }
+  --font-weight-overline: var(--font-weight-normal);
+  --font-size-overline: 0.625rem;
+  --line-height-overline: 2.66;
+  --letter-spacing-overline: 0.08333em;
+}
 
-  .text-inherit {
-    font-family: inherit;
-    font-weight: inherit;
-    font-size: inherit;
-    line-height: inherit;
-    letter-spacing: inherit;
-  }
+@utility typo-* {
+  font-weight: --value(--font-weight-*);
+  font-size: --value(--font-size-*);
+  line-height: --value(--line-height-*);
+  letter-spacing: --value(--letter-spacing-*);
 }
