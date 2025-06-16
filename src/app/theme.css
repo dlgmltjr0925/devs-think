@@ -1,0 +1,97 @@
+:root {
+  --palette-primary-main: var(--color-orange-500);
+  --palette-primary-light: var(--color-orange-400);
+  --palette-primary-dark: var(--color-orange-600);
+  --palette-primary-contrast-text: var(--color-white);
+
+  --palette-secondary-main: var(--color-blue-500);
+  --palette-secondary-light: var(--color-blue-400);
+  --palette-secondary-dark: var(--color-blue-600);
+  --palette-secondary-contrast-text: var(--color-white);
+
+  --palette-error-main: var(--color-red-500);
+  --palette-error-light: var(--color-red-400);
+  --palette-error-dark: var(--color-red-600);
+  --palette-error-contrast-text: var(--color-white);
+
+  --palette-warning-main: var(--color-yellow-500);
+  --palette-warning-light: var(--color-yellow-400);
+  --palette-warning-dark: var(--color-yellow-600);
+  --palette-warning-contrast-text: var(--color-black);
+
+  --palette-success-main: var(--color-green-500);
+  --palette-success-light: var(--color-green-400);
+  --palette-success-dark: var(--color-green-600);
+  --palette-success-contrast-text: var(--color-white);
+
+  --palette-info-main: var(--color-blue-500);
+  --palette-info-light: var(--color-blue-400);
+  --palette-info-dark: var(--color-blue-600);
+  --palette-info-contrast-text: var(--color-white);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --palette-primary-main: var(--color-orange-400);
+    --palette-primary-light: var(--color-orange-300);
+    --palette-primary-dark: var(--color-orange-500);
+    --palette-primary-contrast-text: var(--color-black);
+
+    --palette-secondary-main: var(--color-blue-400);
+    --palette-secondary-light: var(--color-blue-300);
+    --palette-secondary-dark: var(--color-blue-500);
+    --palette-secondary-contrast-text: var(--color-black);
+
+    --palette-error-main: var(--color-red-400);
+    --palette-error-light: var(--color-red-300);
+    --palette-error-dark: var(--color-red-500);
+    --palette-error-contrast-text: var(--color-black);
+
+    --palette-warning-main: var(--color-yellow-400);
+    --palette-warning-light: var(--color-yellow-300);
+    --palette-warning-dark: var(--color-yellow-500);
+    --palette-warning-contrast-text: var(--color-black);
+
+    --palette-success-main: var(--color-green-400);
+    --palette-success-light: var(--color-green-300);
+    --palette-success-dark: var(--color-green-500);
+    --palette-success-contrast-text: var(--color-black);
+
+    --palette-info-main: var(--color-blue-400);
+    --palette-info-light: var(--color-blue-300);
+    --palette-info-dark: var(--color-blue-500);
+    --palette-info-contrast-text: var(--color-black);
+  }
+}
+
+@theme inline {
+  --color-primary-main: var(--palette-primary-main);
+  --color-primary-light: var(--palette-primary-light);
+  --color-primary-dark: var(--palette-primary-dark);
+  --color-primary-contrast-text: var(--palette-primary-contrast-text);
+
+  --color-secondary-main: var(--palette-secondary-main);
+  --color-secondary-light: var(--palette-secondary-light);
+  --color-secondary-dark: var(--palette-secondary-dark);
+  --color-secondary-contrast-text: var(--palette-secondary-contrast-text);
+
+  --color-error-main: var(--palette-error-main);
+  --color-error-light: var(--palette-error-light);
+  --color-error-dark: var(--palette-error-dark);
+  --color-error-contrast-text: var(--palette-error-contrast-text);
+
+  --color-warning-main: var(--palette-warning-main);
+  --color-warning-light: var(--palette-warning-light);
+  --color-warning-dark: var(--palette-warning-dark);
+  --color-warning-contrast-text: var(--palette-warning-contrast-text);
+
+  --color-success-main: var(--palette-success-main);
+  --color-success-light: var(--palette-success-light);
+  --color-success-dark: var(--palette-success-dark);
+  --color-success-contrast-text: var(--palette-success-contrast-text);
+
+  --color-info-main: var(--palette-info-main);
+  --color-info-light: var(--palette-info-light);
+  --color-info-dark: var(--palette-info-dark);
+  --color-info-contrast-text: var(--palette-info-contrast-text);
+}
