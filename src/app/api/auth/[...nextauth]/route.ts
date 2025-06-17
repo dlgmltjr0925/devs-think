@@ -1,9 +1,9 @@
+import { di } from "~/server/infra/di";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth from "next-auth";
 import { AdapterAccount } from "next-auth/adapters";
 import GithubProvider from "next-auth/providers/github";
 import { PRISMA_SERVICE, PrismaService } from "~/server/infra/database";
-import { di } from "~/server/infra/di";
 
 const prismaService = di.resolve<PrismaService>(PRISMA_SERVICE);
 

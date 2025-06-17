@@ -1,1 +1,3 @@
-export { di } from "./dependency-injection";
+import "reflect-metadata";
+
+export { di } from "./module";

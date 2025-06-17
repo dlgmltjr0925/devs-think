@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev --turbopack | pino-pretty --colorize --levelFirst --translateTime='SYS:standard' --messageKey=message",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -16,6 +16,7 @@
     "lucide-react": "^0.515.0",
     "next": "15.3.3",
     "next-auth": "^4.24.11",
+    "pino": "^9.7.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "reflect-metadata": "^0.2.2",

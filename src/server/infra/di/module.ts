@@ -1,5 +1,3 @@
-import "reflect-metadata";
-
 import { container } from "tsyringe";
 import { PRISMA_SERVICE, PrismaService } from "../database/prisma.service";
 
