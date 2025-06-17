@@ -64,3 +64,605 @@ model VerificationToken {
   @@unique([identifier, token])
   @@map("verification_tokens")
 }
+
+model Post {
+  id           Int       @id @default(autoincrement())
+  title        String    @default("")
+  content      String    @default("") @db.Text
+  thumbnailUrl String?   @map("thumbnail_url")
+  cleanUrl     String?   @map("clean_url")
+  isPublic     Boolean   @map("is_public")
+  userId       Int       @map("user_id")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  publishedAt  DateTime? @map("published_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+  deletedAt    DateTime? @map("deleted_at")
+
+  @@map("posts")
+}
+
+model PostDraft {
+  id        Int       @id @default(autoincrement())
+  postId    Int?      @map("post_id")
+  title     String
+  content   String    @default("") @db.Text
+  tags      String[]
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@map("post_drafts")
+}
+
+model PostTagRelation {
+  postId String @map("post_id")
+  tagId  Int    @map("tag_id")
+
+  @@id([postId, tagId])
+  @@map("post_tag_relations")
+}
+
+model Tag {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  @@map("tags")
+}
+
+model PostAnalysis {
+  id Int @id @default(autoincrement())
+  postId Int @map("post_id")
+  status PostAnalysisStatus @map("status")
+  failedCount Int @map("failed_count")
+  failedMessage String? @map("failed_message")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@map("post_analyses")
+}
+
+enum SkillCategory {
+  Language        // 프로그래밍 언어
+  Framework      // 프레임워크
+  Database       // 데이터베이스
+  Cloud          // 클라우드
+  Tool           // 개발 도구
+  Other          // 기타
+}
+
+enum SkillLevel {
+  Beginner       // 입문
+  Intermediate   // 중급
+  Advanced       // 고급
+  Expert         // 전문가
+}
+
+model Skill {
+  id Int @id @default(autoincrement())
+  name String
+  description String? @db.Text
+  category SkillCategory?
+  level SkillLevel?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  // Relations
+  careers CareerSkillRelation[]
+  projects ProjectSkillRelation[]
+  experiences ExperienceSkillRelation[]
+  educations EducationSkillRelation[]
+
+  @@map("skills")
+}
+
+// 경력-기술 관계
+model CareerSkillRelation {
+  id Int @id @default(autoincrement())
+  careerId Int @map("career_id")
+  skillId Int @map("skill_id")
+  
+  career Career @relation(fields: [careerId], references: [id])
+  skill Skill @relation(fields: [skillId], references: [id])
+
+  @@map("career_skill_relations")
+}
+
+// 프로젝트-기술 관계
+model ProjectSkillRelation {
+  id Int @id @default(autoincrement())
+  projectId Int @map("project_id")
+  skillId Int @map("skill_id")
+  
+  project Project @relation(fields: [projectId], references: [id])
+  skill Skill @relation(fields: [skillId], references: [id])
+
+  @@map("project_skill_relations")
+}
+
+model SkillReference {
+  id Int @id @default(autoincrement())
+  userId Int @map("user_id")
+  skillId Int @map("skill_id")
+  source SkillReferenceSource
+  sourceId Int @map("source_id")
+  reason String @map("reason")
+  createdAt DateTime @default(now()) @map("created_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@map("skill_references")
+}
+
+enum PostAnalysisStatus {
+  Pending
+  Completed
+  Failed
+  Skipped
+}
+
+enum ProjectAnalysisStatus {
+  Pending
+  Completed
+  Failed
+  Skipped
+}
+
+model Project {
+  id Int @id @default(autoincrement())
+  userId Int @map("user_id")
+  title String
+  description String? @db.Text
+  role String?
+  startDate DateTime @map("start_date")
+  endDate DateTime? @map("end_date")
+  isOngoing Boolean @default(false) @map("is_ongoing")
+  url String?
+  repositoryUrl String? @map("repository_url")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  // Relations
+  careers CareerProjectRelation[]
+  skills ProjectSkillRelation[]
+
+  @@map("projects")
+}
+
+model ProjectAnalysis {
+  id Int @id @default(autoincrement())
+  projectId Int @map("project_id")
+  status ProjectAnalysisStatus @map("status")
+  failedCount Int @map("failed_count")
+  failedMessage String? @map("failed_message")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@map("project_analyses")
+}
+
+model ProjectReference {
+  id Int @id @default(autoincrement())
+  userId Int @map("user_id")
+  projectId Int @map("project_id")
+  source ProjectReferenceSource
+  sourceId Int @map("source_id")
+  reason String @map("reason")
+  createdAt DateTime @default(now()) @map("created_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@map("project_references")
+}
+
+model Career {
+  id Int @id @default(autoincrement())
+  userId Int @map("user_id")
+  companyName String @map("company_name")
+  position String
+  employmentType EmploymentType @map("employment_type")
+  locationType LocationType @map("location_type")
+  location String?
+  startDate DateTime @map("start_date")
+  endDate DateTime? @map("end_date")
+  isCurrentPosition Boolean @default(false) @map("is_current_position")
+  description String? @db.Text
+  responsibilities String? @db.Text
+  url String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  // Relations
+  projects CareerProjectRelation[]
+  achievements CareerAchievement[]
+  skills CareerSkillRelation[]
+
+  @@map("careers")
+}
+
+model CareerProjectRelation {
+  id Int @id @default(autoincrement())
+  careerId Int @map("career_id")
+  projectId Int @map("project_id")
+
+  career Career @relation(fields: [careerId], references: [id])
+  project Project @relation(fields: [projectId], references: [id])
+
+  @@map("career_project_relations")
+}
+
+model CareerAchievement {
+  id Int @id @default(autoincrement())
+  careerId Int @map("career_id")
+  description String @db.Text
+  metrics String? // 성과 지표 (예: "30% 개선")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  career Career @relation(fields: [careerId], references: [id])
+
+  @@map("career_achievements")
+}
+
+model Education {
+  id Int @id @default(autoincrement())
+  userId Int @map("user_id")
+  schoolName String @map("school_name")
+  degree EducationDegree
+  major String
+  startedAt DateTime @map("started_at")
+  endedAt DateTime? @map("ended_at")
+  gpa Decimal? @db.Decimal(3,2)  // 4.5 scale
+  activities String? @db.Text     // 동아리, 학회 활동
+  description String? @db.Text
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  // 교육과정 중 사용한 기술 스택 관계
+  skills EducationSkillRelation[]
+  
+  // 교육과정 관련 미디어
+  medias EducationMedia[]
+
+  @@map("educations")
+}
+
+model EducationSkillRelation {
+  id Int @id @default(autoincrement())
+  educationId Int @map("education_id")
+  skillId Int @map("skill_id")
+  
+  education Education @relation(fields: [educationId], references: [id])
+  skill Skill @relation(fields: [skillId], references: [id])
+
+  @@map("education_skill_relations")
+}
+
+model EducationMedia {
+  id Int @id @default(autoincrement())
+  educationId Int @map("education_id")
+  type EducationMediaType
+  url String
+  title String?
+  description String? @db.Text
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  education Education @relation(fields: [educationId], references: [id])
+
+  @@map("education_medias")
+}
+
+enum EducationDegree {
+  Associate  // 전문학사
+  Bachelor   // 학사
+  Master     // 석사
+  Doctorate  // 박사
+  Other      // 기타
+}
+
+enum EducationMediaType {
+  Image       // 이미지
+  Document    // 문서
+  Website     // 웹사이트
+  Presentation // 프레젠테이션
+}
+
+enum SkillReferenceSource {
+  Post     // 포스트
+  Project  // 프로젝트
+}
+
+enum ProjectReferenceSource {
+  Post     // 포스트
+}
+
+enum EmploymentType {
+  FullTime     // 정규직
+  Contract     // 계약직
+  Freelance    // 프리랜서
+  Internship   // 인턴
+  PartTime     // 파트타임
+}
+
+enum LocationType {
+  Office      // 대면근무
+  Remote      // 원격근무
+  Hybrid      // 하이브리드
+}
+
+model Experience {
+  id Int @id @default(autoincrement())
+  userId Int @map("user_id")
+  type ExperienceType
+  title String
+  organization String?
+  description String? @db.Text
+  startedAt DateTime? @map("started_at")
+  endedAt DateTime? @map("ended_at")
+  isOngoing Boolean @default(false) @map("is_ongoing")
+  url String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  // 경험 유형별 추가 정보
+  certificationDetail CertificationDetail?
+  awardDetail AwardDetail?
+  languageDetail LanguageDetail?
+  volunteerDetail VolunteerDetail?
+
+  // 관련 기술 스택
+  skills ExperienceSkillRelation[]
+  
+  // 관련 미디어
+  medias ExperienceMedia[]
+
+  @@map("experiences")
+}
+
+// 자격증 추가 정보
+model CertificationDetail {
+  id Int @id @default(autoincrement())
+  experienceId Int @unique @map("experience_id")
+  certificationNumber String? @map("certification_number")  // 자격증 번호
+  issuedBy String? @map("issued_by")                       // 발급 기관
+  validUntil DateTime? @map("valid_until")                 // 유효 기간
+
+  experience Experience @relation(fields: [experienceId], references: [id])
+
+  @@map("certification_details")
+}
+
+// 수상 추가 정보
+model AwardDetail {
+  id Int @id @default(autoincrement())
+  experienceId Int @unique @map("experience_id")
+  rank String?        // 순위/등급
+  prize String?       // 상금/부상
+  category String?    // 수상 분야
+
+  experience Experience @relation(fields: [experienceId], references: [id])
+
+  @@map("award_details")
+}
+
+// 어학 능력 추가 정보
+model LanguageDetail {
+  id Int @id @default(autoincrement())
+  experienceId Int @unique @map("experience_id")
+  language String                    // 언어명
+  testType String? @map("test_type") // 시험 종류 (TOEIC, IELTS 등)
+  score String?                      // 점수/등급
+  level LanguageLevel?               // 숙련도 레벨
+
+  experience Experience @relation(fields: [experienceId], references: [id])
+
+  @@map("language_details")
+}
+
+// 봉사활동 추가 정보
+model VolunteerDetail {
+  id Int @id @default(autoincrement())
+  experienceId Int @unique @map("experience_id")
+  hours Int?                         // 봉사 시간
+  target String?                     // 봉사 대상
+  location String?                   // 봉사 장소
+
+  experience Experience @relation(fields: [experienceId], references: [id])
+
+  @@map("volunteer_details")
+}
+
+// 경험-기술 관계
+model ExperienceSkillRelation {
+  id Int @id @default(autoincrement())
+  experienceId Int @map("experience_id")
+  skillId Int @map("skill_id")
+  
+  experience Experience @relation(fields: [experienceId], references: [id])
+  skill Skill @relation(fields: [skillId], references: [id])
+
+  @@map("experience_skill_relations")
+}
+
+// 경험 관련 미디어
+model ExperienceMedia {
+  id Int @id @default(autoincrement())
+  experienceId Int @map("experience_id")
+  type ExperienceMediaType
+  url String
+  title String?
+  description String? @db.Text
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  experience Experience @relation(fields: [experienceId], references: [id])
+
+  @@map("experience_medias")
+}
+
+enum ExperienceType {
+  Certification  // 자격증
+  Award         // 수상
+  Language      // 어학
+  Volunteer     // 봉사활동
+  Publication   // 출판/논문
+  Patent        // 특허
+  Conference    // 컨퍼런스/세미나
+  Training      // 교육/연수
+  Other         // 기타
+}
+
+enum LanguageLevel {
+  Beginner      // 초급
+  Intermediate  // 중급
+  Advanced      // 고급
+  Native        // 원어민
+}
+
+enum ExperienceMediaType {
+  Image         // 이미지
+  Document      // 문서
+  Website       // 웹사이트
+  Presentation  // 프레젠테이션
+  Video         // 비디오
+  Other         // 기타
+}
+
+// 이력서
+model Resume {
+  id Int @id @default(autoincrement())
+  userId Int @map("user_id")
+  title String
+  description String? @db.Text
+  isPublic Boolean @default(false) @map("is_public")
+  isDefault Boolean @default(false) @map("is_default")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  // Relations
+  versions ResumeVersion[]
+  shares ResumeShare[]
+
+  @@map("resumes")
+}
+
+// 이력서 버전
+model ResumeVersion {
+  id Int @id @default(autoincrement())
+  resumeId Int @map("resume_id")
+  version Int
+  content Json          // 이력서 내용 (선택된 경력, 프로젝트, 학력 등의 ID와 순서 정보)
+  snapshot Json        // 버전 생성 시점의 데이터 스냅샷
+  message String?      // 버전 설명
+  createdAt DateTime @default(now()) @map("created_at")
+  createdBy Int @map("created_by")
+
+  // Relations
+  resume Resume @relation(fields: [resumeId], references: [id])
+
+  @@unique([resumeId, version])
+  @@map("resume_versions")
+}
+
+// 이력서 공유
+model ResumeShare {
+  id Int @id @default(autoincrement())
+  resumeId Int @map("resume_id")
+  type ResumeShareType
+  token String @unique  // 공유 링크 토큰
+  expiresAt DateTime? @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  createdBy Int @map("created_by")
+  lastAccessedAt DateTime? @map("last_accessed_at")
+
+  // Relations
+  resume Resume @relation(fields: [resumeId], references: [id])
+
+  @@map("resume_shares")
+}
+
+// 포트폴리오
+model Portfolio {
+  id Int @id @default(autoincrement())
+  userId Int @map("user_id")
+  title String
+  description String? @db.Text
+  isPublic Boolean @default(false) @map("is_public")
+  isDefault Boolean @default(false) @map("is_default")
+  theme PortfolioTheme @default(Classic)
+  customStyles Json? @map("custom_styles")  // 커스텀 스타일 (색상, 폰트 등)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  // Relations
+  versions PortfolioVersion[]
+  shares PortfolioShare[]
+
+  @@map("portfolios")
+}
+
+// 포트폴리오 버전
+model PortfolioVersion {
+  id Int @id @default(autoincrement())
+  portfolioId Int @map("portfolio_id")
+  version Int
+  content Json          // 포트폴리오 구성 (섹션 구성, 선택된 프로젝트 등)
+  snapshot Json        // 버전 생성 시점의 데이터 스냅샷
+  message String?      // 버전 설명
+  createdAt DateTime @default(now()) @map("created_at")
+  createdBy Int @map("created_by")
+
+  // Relations
+  portfolio Portfolio @relation(fields: [portfolioId], references: [id])
+
+  @@unique([portfolioId, version])
+  @@map("portfolio_versions")
+}
+
+// 포트폴리오 공유
+model PortfolioShare {
+  id Int @id @default(autoincrement())
+  portfolioId Int @map("portfolio_id")
+  type PortfolioShareType
+  token String @unique  // 공유 링크 토큰
+  expiresAt DateTime? @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  createdBy Int @map("created_by")
+  lastAccessedAt DateTime? @map("last_accessed_at")
+
+  // Relations
+  portfolio Portfolio @relation(fields: [portfolioId], references: [id])
+
+  @@map("portfolio_shares")
+}
+
+enum ResumeShareType {
+  Public       // 누구나 접근 가능
+  Private      // 토큰이 있는 사람만 접근 가능
+  Protected    // 비밀번호로 보호
+}
+
+enum PortfolioShareType {
+  Public       // 누구나 접근 가능
+  Private      // 토큰이 있는 사람만 접근 가능
+  Protected    // 비밀번호로 보호
+}
+
+enum PortfolioTheme {
+  Classic      // 클래식
+  Modern       // 모던
+  Minimal      // 미니멀
+  Creative     // 크리에이티브
+  Professional // 프로페셔널
+  Custom       // 커스텀
+}
