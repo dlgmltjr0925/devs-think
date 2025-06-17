@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import "reflect-metadata";
 import { BaseError } from "~/shared/error";
 import { ActionLogger } from "~/server/infra/core/logger";
+import { injectable } from "tsyringe";
 
 type Constructor<T = object> = new (...args: any[]) => T;
 
@@ -52,7 +54,7 @@ export function Action<T extends Constructor>(target: T) {
     }
   });
 
-  return class extends target {
+  const Target = class extends target {
     constructor(...args: any[]) {
       super(...args);
 
@@ -68,4 +70,8 @@ export function Action<T extends Constructor>(target: T) {
       });
     }
   };
+
+  injectable()(Target);
+
+  return Target;
 }
