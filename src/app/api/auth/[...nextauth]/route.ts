@@ -1,13 +1,14 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client";
 import NextAuth from "next-auth";
 import { AdapterAccount } from "next-auth/adapters";
 import GithubProvider from "next-auth/providers/github";
+import { PRISMA_SERVICE, PrismaService } from "~/server/infra/database";
+import { di } from "~/server/infra/di";
 
-const prisma = new PrismaClient();
+const prismaService = di.resolve<PrismaService>(PRISMA_SERVICE);
 
 const linkAccount = async (account: AdapterAccount) => {
-  await prisma.account.create({
+  await prismaService.account.create({
     data: {
       userId: Number(account.userId),
       type: account.type,
@@ -22,7 +23,7 @@ const linkAccount = async (account: AdapterAccount) => {
 
 const handler = NextAuth({
   adapter: {
-    ...PrismaAdapter(prisma),
+    ...PrismaAdapter(prismaService),
     linkAccount,
   },
   providers: [
