@@ -8,4 +8,5 @@ export interface SkillRepository {
     userId: number,
     createSkillData: CreateSkillDataDto,
   ): Promise<Skill>;
+  findSkillsByUserId(userId: number): Promise<Skill[]>;
 }

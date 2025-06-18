@@ -20,10 +20,13 @@ import {
   GET_POST_USE_CASE,
   UPDATE_POST_USE_CASE,
 } from "~/server/application/port/in/post";
+import {
+  CREATE_SKILL_USE_CASE,
+  GET_SKILL_USE_CASE,
+} from "~/server/application/port/in/skill";
 import { PostDraftService, SkillService } from "~/server/application/services";
 import { DELETE_POST_DRAFT_USE_CASE } from "~/server/application/port/in/post-draft/delete-post-draft.use-case";
 import { PostRepositoryAdapter } from "~/server/adapter/out/persistence/post";
-import { CREATE_SKILL_USE_CASE } from "~/server/application/port/in/skill";
 import { SkillRepositoryAdapter } from "~/server/adapter/out/persistence/skill";
 
 export const di = container;
@@ -51,3 +54,4 @@ di.registerSingleton(DELETE_POST_USE_CASE, PostService);
 
 // skill service
 di.registerSingleton(CREATE_SKILL_USE_CASE, SkillService);
+di.registerSingleton(GET_SKILL_USE_CASE, SkillService);

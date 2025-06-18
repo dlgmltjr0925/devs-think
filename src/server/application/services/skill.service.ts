@@ -1,5 +1,5 @@
 import { Inject, Injectable } from "~/server/infra/core";
-import { CreateSkillUseCase } from "../port/in/skill";
+import { CreateSkillUseCase, GetSkillUseCase } from "../port/in/skill";
 import {
   SKILL_REPOSITORY,
   type SkillRepository,
@@ -9,7 +9,7 @@ import { SkillDto } from "../dto/skill.dto";
 import { SkillMapper } from "../mappers/skill";
 
 @Injectable()
-export class SkillService implements CreateSkillUseCase {
+export class SkillService implements CreateSkillUseCase, GetSkillUseCase {
   constructor(
     @Inject(SKILL_REPOSITORY) private readonly skillRepository: SkillRepository,
   ) {}
@@ -24,5 +24,11 @@ export class SkillService implements CreateSkillUseCase {
     );
 
     return SkillMapper.toDto(skill);
+  }
+
+  async getSkillsByUserId(userId: number): Promise<SkillDto[]> {
+    const skills = await this.skillRepository.findSkillsByUserId(userId);
+
+    return skills.map(SkillMapper.toDto);
   }
 }
