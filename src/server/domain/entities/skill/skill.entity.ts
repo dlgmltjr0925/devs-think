@@ -3,6 +3,7 @@ import { SkillLevel } from "./skill-level.entity";
 
 interface SkillConstructorArgs {
   id: number;
+  userId: number;
   name: string;
   description: string | null;
   category: SkillCategory | null;
@@ -14,6 +15,7 @@ interface SkillConstructorArgs {
 
 export class Skill {
   readonly id: number;
+  readonly userId: number;
   readonly name: string;
   readonly description: string | null;
   readonly category: SkillCategory | null;
@@ -24,6 +26,7 @@ export class Skill {
 
   constructor(args: SkillConstructorArgs) {
     this.id = args.id;
+    this.userId = args.userId;
     this.name = args.name;
     this.description = args.description;
     this.category = args.category;
