@@ -43,6 +43,20 @@ export class PostDraftRepositoryAdapter implements PostDraftRepository {
     return PostDraftMapper.toDomain(postDraft);
   }
 
+  async findPostDraftsByUserId(userId: number): Promise<PostDraft[]> {
+    const postDrafts = await this.prismaService.client.postDraft.findMany({
+      where: {
+        userId,
+        deletedAt: null,
+      },
+      orderBy: {
+        updatedAt: "desc",
+      },
+    });
+
+    return postDrafts.map(PostDraftMapper.toDomain);
+  }
+
   async deletePostDraft(postDraftId: number): Promise<void> {
     await this.prismaService.client.postDraft.update({
       where: {

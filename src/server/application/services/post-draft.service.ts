@@ -10,7 +10,6 @@ import {
 import { CreatePostDraftDataDto } from "../dto/create-post-draft-data.dto";
 import { PostDraftDto } from "../dto/post-draft.dto";
 import { PostDraftMapper } from "../mappers/post-draft/post-draft.mapper";
-import { NoContentError } from "~/shared/error/no-content.error";
 import { ForbiddenError } from "~/shared/error";
 
 @Injectable()
@@ -37,12 +36,12 @@ export class PostDraftService
   async getPostDraft(
     userId: number,
     postDraftId: number,
-  ): Promise<PostDraftDto> {
+  ): Promise<PostDraftDto | null> {
     const postDraft =
       await this.postDraftRepository.findPostDraftById(postDraftId);
 
     if (!postDraft) {
-      throw new NoContentError();
+      return null;
     }
 
     if (postDraft.userId !== userId) {
@@ -50,5 +49,12 @@ export class PostDraftService
     }
 
     return PostDraftMapper.toDto(postDraft);
+  }
+
+  async getPostDrafts(userId: number): Promise<PostDraftDto[]> {
+    const postDrafts =
+      await this.postDraftRepository.findPostDraftsByUserId(userId);
+
+    return postDrafts.map(PostDraftMapper.toDto);
   }
 }

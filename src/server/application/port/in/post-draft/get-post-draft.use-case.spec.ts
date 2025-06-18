@@ -8,7 +8,6 @@ import { test } from "~/server/infra/test";
 import { User } from "~/server/domain/user";
 import { UserTestFeature } from "~/server/application/__mocks__/user";
 import { PostDraftTestFeature } from "~/server/application/__mocks__/post-draft";
-import { NoContentError } from "~/shared/error/no-content.error";
 import { ForbiddenError } from "~/shared/error";
 
 describe("GetPostDraftUseCase", () => {
@@ -48,7 +47,12 @@ describe("GetPostDraftUseCase", () => {
         testPostDraft.id,
       );
 
+      if (!postDraft) {
+        throw new Error("Post Draft not found");
+      }
+
       // then
+
       expect(postDraft).toBeDefined();
       expect(postDraft.id).toBe(testPostDraft.id);
       expect(postDraft.userId).toBe(testUser.id);
@@ -63,9 +67,12 @@ describe("GetPostDraftUseCase", () => {
       const notExistPostDraftId = 1000000000;
 
       // when & then
-      await expect(
-        getPostDraftUseCase.getPostDraft(testUser.id, notExistPostDraftId),
-      ).rejects.toThrow(NoContentError);
+      const postDraft = await getPostDraftUseCase.getPostDraft(
+        testUser.id,
+        notExistPostDraftId,
+      );
+
+      expect(postDraft).toBeNull();
     });
 
     test("다른 사람의 Post Draft 조회시 Forbidden Error 반환", async () => {
@@ -89,9 +96,50 @@ describe("GetPostDraftUseCase", () => {
       await postDraftTestFeature.deleteTestPostDraft(testPostDraft.id);
 
       // when & then
-      await expect(
-        getPostDraftUseCase.getPostDraft(testUser.id, testPostDraft.id),
-      ).rejects.toThrow(NoContentError);
+      const postDraft = await getPostDraftUseCase.getPostDraft(
+        testUser.id,
+        testPostDraft.id,
+      );
+
+      expect(postDraft).toBeNull();
+    });
+  });
+
+  describe("getPostDrafts", () => {
+    test("사용자가 등록한 Post Draft가 없는 경우 빈 배열 반환", async () => {
+      // given
+
+      // when
+      const postDrafts = await getPostDraftUseCase.getPostDrafts(testUser.id);
+
+      expect(postDrafts).toHaveLength(0);
+    });
+
+    test("Post Drafts 조회 성공", async () => {
+      // given
+      const testPostDrafts = await Promise.all([
+        postDraftTestFeature.createTestPostDraft(testUser.id),
+        postDraftTestFeature.createTestPostDraft(testUser.id),
+        postDraftTestFeature.createTestPostDraft(testUser.id),
+      ]);
+
+      // when
+      const postDrafts = await getPostDraftUseCase.getPostDrafts(testUser.id);
+
+      expect(postDrafts).toHaveLength(testPostDrafts.length);
+    });
+
+    test("Post Drafts 삭제시 삭제된 Post Draft 제외하고 조회", async () => {
+      // given
+      const testPostDraft = await postDraftTestFeature.createTestPostDraft(
+        testUser.id,
+      );
+      await postDraftTestFeature.deleteTestPostDraft(testPostDraft.id);
+
+      // when
+      const postDrafts = await getPostDraftUseCase.getPostDrafts(testUser.id);
+
+      expect(postDrafts).toHaveLength(0);
     });
   });
 });
