@@ -10,5 +10,9 @@ export interface PostDraftRepository {
   ): Promise<PostDraft>;
   findPostDraftById(postDraftId: number): Promise<PostDraft | null>;
   findPostDraftsByUserId(userId: number): Promise<PostDraft[]>;
+  updatePostDraft(
+    postDraftId: number,
+    postDraft: PostDraft,
+  ): Promise<PostDraft>;
   deletePostDraft(postDraftId: number): Promise<void>;
 }

@@ -13,9 +13,9 @@ export class PostDraft {
   readonly id: number;
   readonly userId: number;
   readonly postId: number | null;
-  readonly title: string;
-  readonly content: string;
-  readonly tags: string[];
+  title: string;
+  content: string;
+  tags: string[];
   readonly createdAt: Date;
   readonly updatedAt: Date;
   readonly deletedAt: Date | null;
@@ -30,5 +30,11 @@ export class PostDraft {
     this.createdAt = args.createdAt;
     this.updatedAt = args.updatedAt;
     this.deletedAt = args.deletedAt;
+  }
+
+  update(args: Partial<PostDraftConstructorArgs>) {
+    this.title = args.title ?? this.title;
+    this.content = args.content ?? this.content;
+    this.tags = args.tags ?? this.tags;
   }
 }

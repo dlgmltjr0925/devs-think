@@ -9,6 +9,7 @@ import { PostDraftRepositoryAdapter } from "~/server/adapter/out/persistence/pos
 import {
   CREATE_POST_DRAFT_USE_CASE,
   GET_POST_DRAFT_USE_CASE,
+  UPDATE_POST_DRAFT_USE_CASE,
 } from "~/server/application/port/in/post-draft";
 import { PostDraftService } from "~/server/application/services";
 
@@ -24,6 +25,7 @@ di.registerSingleton(POST_DRAFT_REPOSITORY, PostDraftRepositoryAdapter);
 // post draft service
 di.registerSingleton(CREATE_POST_DRAFT_USE_CASE, PostDraftService);
 di.registerSingleton(GET_POST_DRAFT_USE_CASE, PostDraftService);
+di.registerSingleton(UPDATE_POST_DRAFT_USE_CASE, PostDraftService);
 
 // post service
 di.registerSingleton(WRITE_POST_USE_CASE, PostService);

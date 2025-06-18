@@ -6,15 +6,18 @@ import {
 import {
   CreatePostDraftUseCase,
   GetPostDraftUseCase,
+  UpdatePostDraftUseCase,
 } from "../port/in/post-draft";
 import { CreatePostDraftDataDto } from "../dto/create-post-draft-data.dto";
 import { PostDraftDto } from "../dto/post-draft.dto";
 import { PostDraftMapper } from "../mappers/post-draft/post-draft.mapper";
 import { ForbiddenError } from "~/shared/error";
+import { UpdatePostDraftDataDto } from "../dto/update-post-draft-data.dto";
+import { NotFoundError } from "~/shared/error/not-found.error";
 
 @Injectable()
 export class PostDraftService
-  implements CreatePostDraftUseCase, GetPostDraftUseCase
+  implements CreatePostDraftUseCase, GetPostDraftUseCase, UpdatePostDraftUseCase
 {
   constructor(
     @Inject(POST_DRAFT_REPOSITORY)
@@ -56,5 +59,31 @@ export class PostDraftService
       await this.postDraftRepository.findPostDraftsByUserId(userId);
 
     return postDrafts.map(PostDraftMapper.toDto);
+  }
+
+  async updatePostDraft(
+    userId: number,
+    postDraftId: number,
+    updatePostDraftData: UpdatePostDraftDataDto,
+  ): Promise<PostDraftDto> {
+    const postDraft =
+      await this.postDraftRepository.findPostDraftById(postDraftId);
+
+    if (!postDraft) {
+      throw new NotFoundError();
+    }
+
+    if (postDraft.userId !== userId) {
+      throw new ForbiddenError();
+    }
+
+    postDraft.update(updatePostDraftData);
+
+    const updatedPostDraft = await this.postDraftRepository.updatePostDraft(
+      postDraftId,
+      postDraft,
+    );
+
+    return PostDraftMapper.toDto(updatedPostDraft);
   }
 }
