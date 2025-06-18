@@ -28,6 +28,31 @@ describe("GetSkillUseCase", () => {
     expect(getSkillUseCase).toBeDefined();
   });
 
+  describe("getSkill", () => {
+    test("사용자가 가지고 있는 기술을 조회할 수 있다.", async () => {
+      // given
+      const skill = await skillTestFeature.createTestSkill(testUser.id);
+
+      // when
+      const result = await getSkillUseCase.getSkill(testUser.id, skill.id);
+
+      if (!result) {
+        throw new Error("Skill not found");
+      }
+
+      // then
+      expect(result).toBeDefined();
+      expect(result.id).toBe(skill.id);
+      expect(result.name).toBe(skill.name);
+      expect(result.description).toBe(skill.description);
+      expect(result.category).toBe(skill.category);
+      expect(result.level).toBe(skill.level);
+      expect(result.createdAt).toBeDefined();
+      expect(result.updatedAt).toBeDefined();
+      expect(result.deletedAt).toBeNull();
+    });
+  });
+
   describe("getSkillsByUserId", () => {
     test("사용자가 가지고 있는 모든 기술을 조회할 수 있다.", async () => {
       // given

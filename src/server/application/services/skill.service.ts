@@ -26,6 +26,16 @@ export class SkillService implements CreateSkillUseCase, GetSkillUseCase {
     return SkillMapper.toDto(skill);
   }
 
+  async getSkill(userId: number, skillId: number): Promise<SkillDto | null> {
+    const skill = await this.skillRepository.findSkillById(skillId);
+
+    if (!skill) {
+      return null;
+    }
+
+    return SkillMapper.toDto(skill);
+  }
+
   async getSkillsByUserId(userId: number): Promise<SkillDto[]> {
     const skills = await this.skillRepository.findSkillsByUserId(userId);
 
