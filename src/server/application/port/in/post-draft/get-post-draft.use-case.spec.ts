@@ -9,6 +9,8 @@ import { User } from "~/server/domain/user";
 import { UserTestFeature } from "~/server/application/__mocks__/user";
 import { PostDraft } from "~/server/domain/entities/post-draft";
 import { PostDraftTestFeature } from "~/server/application/__mocks__/post-draft";
+import { NoContentError } from "~/shared/error/no-content.error";
+import { ForbiddenError } from "~/shared/error";
 
 describe("GetPostDraftUseCase", () => {
   let getPostDraftUseCase: GetPostDraftUseCase;
@@ -55,6 +57,28 @@ describe("GetPostDraftUseCase", () => {
       expect(postDraft.content).toBe(testPostDraft.content);
       expect(postDraft.createdAt).toStrictEqual(testPostDraft.createdAt);
       expect(postDraft.updatedAt).toStrictEqual(testPostDraft.updatedAt);
+    });
+
+    test("등록되지 않은 Post Draft 조회시 Error 반환", async () => {
+      // given
+      const notExistPostDraftId = 1000000000;
+
+      // when & then
+      await expect(
+        getPostDraftUseCase.getPostDraft(testUser.id, notExistPostDraftId),
+      ).rejects.toThrow(NoContentError);
+    });
+
+    test("다른 사람의 Post Draft 조회시 Error 반환", async () => {
+      // given
+      const testPostDraft = await postDraftTestFeature.createTestPostDraft(
+        testUser.id,
+      );
+
+      // when & then
+      await expect(
+        getPostDraftUseCase.getPostDraft(testUser.id + 1, testPostDraft.id),
+      ).rejects.toThrow(ForbiddenError);
     });
   });
 });

@@ -10,6 +10,8 @@ import {
 import { CreatePostDraftDataDto } from "../dto/create-post-draft-data.dto";
 import { PostDraftDto } from "../dto/post-draft.dto";
 import { PostDraftMapper } from "../mappers/post-draft/post-draft.mapper";
+import { NoContentError } from "~/shared/error/no-content.error";
+import { ForbiddenError } from "~/shared/error";
 
 @Injectable()
 export class PostDraftService
@@ -40,11 +42,11 @@ export class PostDraftService
       await this.postDraftRepository.findPostDraftById(postDraftId);
 
     if (!postDraft) {
-      // TODO: No Content Error 처리
+      throw new NoContentError();
     }
 
     if (postDraft.userId !== userId) {
-      // TODO: Forbidden Error 처리
+      throw new ForbiddenError();
     }
 
     return PostDraftMapper.toDto(postDraft);
