@@ -6,6 +6,7 @@ import { PRISMA_SERVICE, PrismaService } from "~/server/infra/database";
 import { PostMapper } from "./mappers/post.mapper";
 import { CursorBasedPaginationDto } from "~/server/application/dto/cursor-based-pagination.dto";
 import { Prisma } from "@prisma/client";
+import { UpdatePostDataDto } from "~/server/application/dto/update-post-data.dto";
 
 @Injectable()
 export class PostRepositoryAdapter implements PostRepository {
@@ -160,5 +161,36 @@ export class PostRepositoryAdapter implements PostRepository {
       hasNext,
       hasPrev,
     };
+  }
+
+  async updatePost(
+    postId: number,
+    updatePostData: UpdatePostDataDto,
+  ): Promise<Post> {
+    const tags = await this.findTagsIfNotExistsCreate(updatePostData.tags);
+
+    const updatedPost = await this.prismaService.client.post.update({
+      where: { id: postId },
+      data: {
+        title: updatePostData.title,
+        content: updatePostData.content,
+        thumbnailUrl: updatePostData.thumbnailUrl,
+        cleanUrl: updatePostData.cleanUrl,
+        isPublic: updatePostData.isPublic,
+        postTagRelations: {
+          deleteMany: {},
+          createMany: { data: tags.map((tag) => ({ tagId: tag.id })) },
+        },
+      },
+      include: {
+        postTagRelations: {
+          include: {
+            tag: true,
+          },
+        },
+      },
+    });
+
+    return PostMapper.toDomain(updatedPost);
   }
 }

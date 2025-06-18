@@ -14,6 +14,9 @@ import {
 import { transactional } from "~/server/infra/transaction";
 import { GetPostUseCase } from "../port/in/post";
 import { CursorBasedPaginationDto } from "../dto/cursor-based-pagination.dto";
+import { UpdatePostDataDto } from "../dto/update-post-data.dto";
+import { NotFoundError } from "~/shared/error/not-found.error";
+import { ForbiddenError } from "~/shared/error";
 
 @Injectable()
 export class PostService implements CreatePostUseCase, GetPostUseCase {
@@ -79,5 +82,23 @@ export class PostService implements CreatePostUseCase, GetPostUseCase {
       cursor,
       limit,
     );
+  }
+
+  async updatePost(
+    userId: number,
+    postId: number,
+    updatePostData: UpdatePostDataDto,
+  ): Promise<PostDto> {
+    const post = await this.postRepository.findPostById(postId);
+
+    if (!post) {
+      throw new NotFoundError();
+    }
+
+    if (post.userId !== userId) {
+      throw new ForbiddenError();
+    }
+
+    return await this.postRepository.updatePost(postId, updatePostData);
   }
 }

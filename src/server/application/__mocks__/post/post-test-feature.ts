@@ -14,16 +14,12 @@ export class PostTestFeature {
   ) {}
 
   async createTestPost(userId: number): Promise<Post> {
-    return this.postRepository.createPost(userId, {
-      ...mockCreatePostData,
-      userId,
-    });
+    return this.postRepository.createPost(userId, mockCreatePostData);
   }
 
   async createTestPrivatePost(userId: number): Promise<Post> {
     return this.postRepository.createPost(userId, {
       ...mockCreatePostData,
-      userId,
       isPublic: false,
     });
   }

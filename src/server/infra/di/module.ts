@@ -16,6 +16,7 @@ import {
 import {
   CREATE_POST_USE_CASE,
   GET_POST_USE_CASE,
+  UPDATE_POST_USE_CASE,
 } from "~/server/application/port/in/post";
 import { PostDraftService } from "~/server/application/services";
 import { DELETE_POST_DRAFT_USE_CASE } from "~/server/application/port/in/post-draft/delete-post-draft.use-case";
@@ -40,3 +41,4 @@ di.registerSingleton(DELETE_POST_DRAFT_USE_CASE, PostDraftService);
 // post service
 di.registerSingleton(CREATE_POST_USE_CASE, PostService);
 di.registerSingleton(GET_POST_USE_CASE, PostService);
+di.registerSingleton(UPDATE_POST_USE_CASE, PostService);
