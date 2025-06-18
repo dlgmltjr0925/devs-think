@@ -32,6 +32,7 @@ export class PostDraftRepositoryAdapter implements PostDraftRepository {
     const postDraft = await this.prismaService.client.postDraft.findUnique({
       where: {
         id: postDraftId,
+        deletedAt: null,
       },
     });
 
@@ -40,5 +41,17 @@ export class PostDraftRepositoryAdapter implements PostDraftRepository {
     }
 
     return PostDraftMapper.toDomain(postDraft);
+  }
+
+  async deletePostDraft(postDraftId: number): Promise<void> {
+    await this.prismaService.client.postDraft.update({
+      where: {
+        id: postDraftId,
+        deletedAt: null,
+      },
+      data: {
+        deletedAt: new Date(),
+      },
+    });
   }
 }

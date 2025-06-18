@@ -9,4 +9,5 @@ export interface PostDraftRepository {
     createPostDraftData: CreatePostDraftDataDto,
   ): Promise<PostDraft>;
   findPostDraftById(postDraftId: number): Promise<PostDraft | null>;
+  deletePostDraft(postDraftId: number): Promise<void>;
 }

@@ -19,4 +19,8 @@ export class PostDraftTestFeature {
       mockCreatePostDraftData,
     );
   }
+
+  async deleteTestPostDraft(postDraftId: number): Promise<void> {
+    await this.postDraftRepository.deletePostDraft(postDraftId);
+  }
 }

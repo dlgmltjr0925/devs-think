@@ -7,7 +7,6 @@ import { di } from "~/server/infra/di";
 import { test } from "~/server/infra/test";
 import { User } from "~/server/domain/user";
 import { UserTestFeature } from "~/server/application/__mocks__/user";
-import { PostDraft } from "~/server/domain/entities/post-draft";
 import { PostDraftTestFeature } from "~/server/application/__mocks__/post-draft";
 import { NoContentError } from "~/shared/error/no-content.error";
 import { ForbiddenError } from "~/shared/error";
@@ -59,7 +58,7 @@ describe("GetPostDraftUseCase", () => {
       expect(postDraft.updatedAt).toStrictEqual(testPostDraft.updatedAt);
     });
 
-    test("등록되지 않은 Post Draft 조회시 Error 반환", async () => {
+    test("등록되지 않은 Post Draft 조회시 No Content Error 반환", async () => {
       // given
       const notExistPostDraftId = 1000000000;
 
@@ -69,7 +68,7 @@ describe("GetPostDraftUseCase", () => {
       ).rejects.toThrow(NoContentError);
     });
 
-    test("다른 사람의 Post Draft 조회시 Error 반환", async () => {
+    test("다른 사람의 Post Draft 조회시 Forbidden Error 반환", async () => {
       // given
       const testPostDraft = await postDraftTestFeature.createTestPostDraft(
         testUser.id,
@@ -79,6 +78,20 @@ describe("GetPostDraftUseCase", () => {
       await expect(
         getPostDraftUseCase.getPostDraft(testUser.id + 1, testPostDraft.id),
       ).rejects.toThrow(ForbiddenError);
+    });
+
+    test("Post Draft 삭제된 경우 No Content 에러 반환", async () => {
+      // given
+      const testPostDraft = await postDraftTestFeature.createTestPostDraft(
+        testUser.id,
+      );
+
+      await postDraftTestFeature.deleteTestPostDraft(testPostDraft.id);
+
+      // when & then
+      await expect(
+        getPostDraftUseCase.getPostDraft(testUser.id, testPostDraft.id),
+      ).rejects.toThrow(NoContentError);
     });
   });
 });
