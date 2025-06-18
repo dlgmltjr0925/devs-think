@@ -139,22 +139,6 @@ model PostAnalysis {
   @@map("post_analyses")
 }
 
-enum SkillCategory {
-  Language // 프로그래밍 언어
-  Framework // 프레임워크
-  Database // 데이터베이스
-  Cloud // 클라우드
-  Tool // 개발 도구
-  Other // 기타
-}
-
-enum SkillLevel {
-  Beginner // 입문
-  Intermediate // 중급
-  Advanced // 고급
-  Expert // 전문가
-}
-
 model Skill {
   id          Int            @id @default(autoincrement())
   name        String
@@ -172,6 +156,22 @@ model Skill {
   educations  EducationSkillRelation[]
 
   @@map("skills")
+}
+
+enum SkillCategory {
+  Language // 프로그래밍 언어
+  Framework // 프레임워크
+  Database // 데이터베이스
+  Cloud // 클라우드
+  Tool // 개발 도구
+  Other // 기타
+}
+
+enum SkillLevel {
+  Beginner // 입문
+  Intermediate // 중급
+  Advanced // 고급
+  Expert // 전문가
 }
 
 // 경력-기술 관계
