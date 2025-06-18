@@ -10,3 +10,7 @@ export {
   UPDATE_POST_DRAFT_USE_CASE,
   type UpdatePostDraftUseCase,
 } from "./update-post-draft.use-case";
+export {
+  DELETE_POST_DRAFT_USE_CASE,
+  type DeletePostDraftUseCase,
+} from "./delete-post-draft.use-case";

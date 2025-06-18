@@ -7,6 +7,7 @@ import {
   CreatePostDraftUseCase,
   GetPostDraftUseCase,
   UpdatePostDraftUseCase,
+  DeletePostDraftUseCase,
 } from "../port/in/post-draft";
 import { CreatePostDraftDataDto } from "../dto/create-post-draft-data.dto";
 import { PostDraftDto } from "../dto/post-draft.dto";
@@ -17,7 +18,11 @@ import { NotFoundError } from "~/shared/error/not-found.error";
 
 @Injectable()
 export class PostDraftService
-  implements CreatePostDraftUseCase, GetPostDraftUseCase, UpdatePostDraftUseCase
+  implements
+    CreatePostDraftUseCase,
+    GetPostDraftUseCase,
+    UpdatePostDraftUseCase,
+    DeletePostDraftUseCase
 {
   constructor(
     @Inject(POST_DRAFT_REPOSITORY)
@@ -85,5 +90,20 @@ export class PostDraftService
     );
 
     return PostDraftMapper.toDto(updatedPostDraft);
+  }
+
+  async deletePostDraft(userId: number, postDraftId: number): Promise<void> {
+    const postDraft =
+      await this.postDraftRepository.findPostDraftById(postDraftId);
+
+    if (!postDraft) {
+      throw new NotFoundError();
+    }
+
+    if (postDraft.userId !== userId) {
+      throw new ForbiddenError();
+    }
+
+    await this.postDraftRepository.deletePostDraft(postDraftId);
   }
 }

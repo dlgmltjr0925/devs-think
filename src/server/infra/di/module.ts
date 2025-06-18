@@ -12,6 +12,7 @@ import {
   UPDATE_POST_DRAFT_USE_CASE,
 } from "~/server/application/port/in/post-draft";
 import { PostDraftService } from "~/server/application/services";
+import { DELETE_POST_DRAFT_USE_CASE } from "~/server/application/port/in/post-draft/delete-post-draft.use-case";
 
 export const di = container;
 
@@ -26,6 +27,7 @@ di.registerSingleton(POST_DRAFT_REPOSITORY, PostDraftRepositoryAdapter);
 di.registerSingleton(CREATE_POST_DRAFT_USE_CASE, PostDraftService);
 di.registerSingleton(GET_POST_DRAFT_USE_CASE, PostDraftService);
 di.registerSingleton(UPDATE_POST_DRAFT_USE_CASE, PostDraftService);
+di.registerSingleton(DELETE_POST_DRAFT_USE_CASE, PostDraftService);
 
 // post service
 di.registerSingleton(WRITE_POST_USE_CASE, PostService);
