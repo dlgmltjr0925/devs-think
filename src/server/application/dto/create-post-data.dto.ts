@@ -6,4 +6,5 @@ export class CreatePostDataDto {
   cleanUrl: string | null;
   isPublic: boolean;
   userId: number;
+  postDraftId: number | null;
 }

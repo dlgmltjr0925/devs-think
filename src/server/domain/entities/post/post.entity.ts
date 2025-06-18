@@ -3,14 +3,14 @@ interface PostConstructorArgs {
   title: string;
   content: string;
   tags: string[];
-  thumbnailUrl?: string;
-  cleanUrl?: string;
+  thumbnailUrl: string | null;
+  cleanUrl: string | null;
   isPublic: boolean;
   userId: number;
   createdAt: Date;
-  publishedAt?: Date;
+  publishedAt: Date | null;
   updatedAt: Date;
-  deletedAt?: Date;
+  deletedAt: Date | null;
 }
 
 export class Post {
@@ -18,14 +18,14 @@ export class Post {
   readonly title: string;
   readonly content: string;
   readonly tags: string[];
-  readonly thumbnailUrl?: string;
-  readonly cleanUrl?: string;
+  readonly thumbnailUrl: string | null;
+  readonly cleanUrl: string | null;
   readonly isPublic: boolean;
   readonly userId: number;
   readonly createdAt: Date;
-  readonly publishedAt?: Date;
+  readonly publishedAt: Date | null;
   readonly updatedAt: Date;
-  readonly deletedAt?: Date;
+  readonly deletedAt: Date | null;
 
   constructor(args: PostConstructorArgs) {
     this.id = args.id;

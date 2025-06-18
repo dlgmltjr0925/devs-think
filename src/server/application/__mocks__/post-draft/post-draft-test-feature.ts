@@ -20,6 +20,10 @@ export class PostDraftTestFeature {
     );
   }
 
+  async getPostDraft(postDraftId: number): Promise<PostDraft | null> {
+    return this.postDraftRepository.findPostDraftById(postDraftId);
+  }
+
   async deleteTestPostDraft(postDraftId: number): Promise<void> {
     await this.postDraftRepository.deletePostDraft(postDraftId);
   }

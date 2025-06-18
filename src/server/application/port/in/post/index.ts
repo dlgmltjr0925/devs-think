@@ -1,4 +1,4 @@
 export {
-  WRITE_POST_USE_CASE,
-  type WritePostUseCase,
-} from "./write-post.use-case";
+  CREATE_POST_USE_CASE,
+  type CreatePostUseCase,
+} from "./create-post.use-case";
