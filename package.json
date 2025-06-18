@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack | pino-pretty --colorize --levelFirst --translateTime='SYS:standard' --messageKey=message",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@auth/core": "^0.39.1",
@@ -36,7 +38,9 @@
     "prettier-plugin-tailwindcss": "^0.6.12",
     "prisma": "^6.9.0",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.2.4"
   },
   "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0"
 }
