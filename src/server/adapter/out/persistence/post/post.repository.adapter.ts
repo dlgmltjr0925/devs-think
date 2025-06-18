@@ -4,6 +4,8 @@ import { Post } from "~/server/domain/entities/post";
 import { Inject, Injectable } from "~/server/infra/core";
 import { PRISMA_SERVICE, PrismaService } from "~/server/infra/database";
 import { PostMapper } from "./mappers/post.mapper";
+import { CursorBasedPaginationDto } from "~/server/application/dto/cursor-based-pagination.dto";
+import { Prisma } from "@prisma/client";
 
 @Injectable()
 export class PostRepositoryAdapter implements PostRepository {
@@ -45,6 +47,7 @@ export class PostRepositoryAdapter implements PostRepository {
     const post = await this.prismaService.client.post.findUnique({
       where: {
         id: postId,
+        deletedAt: null,
       },
       include: {
         postTagRelations: {
@@ -82,5 +85,80 @@ export class PostRepositoryAdapter implements PostRepository {
     );
 
     return existingTags.concat(createdTags);
+  }
+
+  findMyPostsByTagId(
+    userId: number,
+    tagId: number | null,
+    cursor: number | null,
+    limit: number,
+  ): Promise<CursorBasedPaginationDto<Post>> {
+    return this.findPosts(userId, tagId, null, cursor, limit);
+  }
+
+  findPublicPostsByUserIdAndTagId(
+    userId: number,
+    tagId: number | null,
+    cursor: number | null,
+    limit: number,
+  ): Promise<CursorBasedPaginationDto<Post>> {
+    return this.findPosts(userId, tagId, true, cursor, limit);
+  }
+
+  private async findPosts(
+    userId: number,
+    tagId: number | null,
+    isPublic: boolean | null,
+    cursor: number | null,
+    limit: number = 20,
+  ): Promise<CursorBasedPaginationDto<Post>> {
+    const where: Prisma.PostWhereInput = {
+      userId,
+      deletedAt: null,
+    };
+
+    if (tagId) {
+      where.postTagRelations = {
+        some: { tagId },
+      };
+    }
+
+    if (isPublic) {
+      where.isPublic = true;
+    }
+
+    const [totalCount, posts] = await Promise.all([
+      this.prismaService.client.post.count({ where }),
+      this.prismaService.client.post.findMany({
+        where,
+        orderBy: {
+          id: "desc",
+        },
+        cursor: cursor ? { id: cursor } : undefined,
+        take: limit + 1,
+        include: {
+          postTagRelations: {
+            include: {
+              tag: true,
+            },
+          },
+        },
+      }),
+    ]);
+
+    const data = posts.slice(0, limit).map(PostMapper.toDomain);
+    const hasNext = posts.length > limit;
+    const nextCursor = hasNext ? posts[posts.length - 1].id : null;
+    const hasPrev = cursor ? true : false;
+    const prevCursor = cursor ? cursor : null;
+
+    return {
+      data,
+      totalCount,
+      nextCursor,
+      prevCursor,
+      hasNext,
+      hasPrev,
+    };
   }
 }

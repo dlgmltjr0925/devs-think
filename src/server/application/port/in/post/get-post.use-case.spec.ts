@@ -89,4 +89,126 @@ describe("GetPostUseCase", () => {
       expect(post).toBeNull();
     });
   });
+
+  describe("getMyPostsByTagId", () => {
+    test("내가 작성한 Post 목록 조회 성공", async () => {
+      // given
+      await Promise.all([
+        postTestFeature.createTestPost(testUser.id),
+        postTestFeature.createTestPrivatePost(testUser.id),
+      ]);
+
+      // when
+      const posts = await getPostUseCase.getMyPostsByTagId(testUser.id);
+
+      // then
+      expect(posts).toBeDefined();
+      expect(posts.data.length).toBe(2);
+      expect(posts.totalCount).toBe(2);
+      expect(posts.hasNext).toBe(false);
+      expect(posts.hasPrev).toBe(false);
+      expect(posts.nextCursor).toBeNull();
+      expect(posts.prevCursor).toBeNull();
+    });
+
+    test("내가 작성한 Post가 20개가 넘을 경우 20개 단위로 조회", async () => {
+      // given
+      await Promise.all(
+        Array.from({ length: 21 }, () =>
+          postTestFeature.createTestPost(testUser.id),
+        ),
+      );
+
+      // when
+      const posts = await getPostUseCase.getMyPostsByTagId(testUser.id);
+
+      // then
+      expect(posts).toBeDefined();
+      expect(posts.data.length).toBe(20);
+      expect(posts.totalCount).toBe(21);
+      expect(posts.hasNext).toBe(true);
+      expect(posts.hasPrev).toBe(false);
+      expect(posts.nextCursor).toBeDefined();
+      expect(posts.prevCursor).toBeNull();
+
+      // when
+      const nextPosts = await getPostUseCase.getMyPostsByTagId(
+        testUser.id,
+        undefined,
+        posts.nextCursor ?? undefined,
+      );
+
+      // then
+      expect(nextPosts).toBeDefined();
+      expect(nextPosts.data.length).toBe(1);
+      expect(nextPosts.totalCount).toBe(21);
+      expect(nextPosts.hasNext).toBe(false);
+      expect(nextPosts.hasPrev).toBe(true);
+      expect(nextPosts.nextCursor).toBeNull();
+      expect(nextPosts.prevCursor).toBeDefined();
+    });
+
+    test("타인의 공개 포스트 리스트를 조회 성공", async () => {
+      // given
+      await Promise.all([
+        postTestFeature.createTestPost(testUser.id),
+        postTestFeature.createTestPrivatePost(testUser.id),
+      ]);
+
+      // when
+      const posts = await getPostUseCase.getPublicPostsByUserIdAndTagId(
+        testUser.id,
+      );
+
+      // then
+      expect(posts).toBeDefined();
+      expect(posts.data.length).toBe(1);
+      expect(posts.totalCount).toBe(1);
+      expect(posts.hasNext).toBe(false);
+      expect(posts.hasPrev).toBe(false);
+      expect(posts.nextCursor).toBeNull();
+      expect(posts.prevCursor).toBeNull();
+    });
+
+    test("타인의 공개 포스트 리스트를 조회 성공", async () => {
+      await Promise.all([
+        ...Array.from({ length: 21 }, () =>
+          postTestFeature.createTestPost(testUser.id),
+        ),
+        ...Array.from({ length: 1 }, () =>
+          postTestFeature.createTestPrivatePost(testUser.id),
+        ),
+      ]);
+
+      // when
+      const posts = await getPostUseCase.getPublicPostsByUserIdAndTagId(
+        testUser.id,
+      );
+
+      // then
+      expect(posts).toBeDefined();
+      expect(posts.data.length).toBe(20);
+      expect(posts.totalCount).toBe(21);
+      expect(posts.hasNext).toBe(true);
+      expect(posts.hasPrev).toBe(false);
+      expect(posts.nextCursor).toBeDefined();
+      expect(posts.prevCursor).toBeNull();
+
+      // when
+      const nextPosts = await getPostUseCase.getPublicPostsByUserIdAndTagId(
+        testUser.id,
+        undefined,
+        posts.nextCursor ?? undefined,
+      );
+
+      // then
+      expect(nextPosts).toBeDefined();
+      expect(nextPosts.data.length).toBe(1);
+      expect(nextPosts.totalCount).toBe(21);
+      expect(nextPosts.hasNext).toBe(false);
+      expect(nextPosts.hasPrev).toBe(true);
+      expect(nextPosts.nextCursor).toBeNull();
+      expect(nextPosts.prevCursor).toBeDefined();
+    });
+  });
 });

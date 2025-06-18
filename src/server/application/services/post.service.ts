@@ -13,6 +13,7 @@ import {
 } from "../port/out/repositories";
 import { transactional } from "~/server/infra/transaction";
 import { GetPostUseCase } from "../port/in/post";
+import { CursorBasedPaginationDto } from "../dto/cursor-based-pagination.dto";
 
 @Injectable()
 export class PostService implements CreatePostUseCase, GetPostUseCase {
@@ -50,5 +51,33 @@ export class PostService implements CreatePostUseCase, GetPostUseCase {
     }
 
     return PostMapper.toDto(post);
+  }
+
+  async getMyPostsByTagId(
+    userId: number,
+    tagId: number | null = null,
+    cursor: number | null = null,
+    limit?: number,
+  ): Promise<CursorBasedPaginationDto<PostDto>> {
+    return await this.postRepository.findMyPostsByTagId(
+      userId,
+      tagId,
+      cursor,
+      limit,
+    );
+  }
+
+  async getPublicPostsByUserIdAndTagId(
+    userId: number,
+    tagId: number | null = null,
+    cursor: number | null = null,
+    limit?: number,
+  ): Promise<CursorBasedPaginationDto<PostDto>> {
+    return await this.postRepository.findPublicPostsByUserIdAndTagId(
+      userId,
+      tagId,
+      cursor,
+      limit,
+    );
   }
 }
