@@ -46,12 +46,15 @@ model Session {
 
 model User {
   id            Int       @id @default(autoincrement())
-  name          String?
-  email         String?   @unique
+  name          String
+  email         String    @unique
   emailVerified DateTime? @map("email_verified")
-  image         String?
+  image         String
   accounts      Account[]
   sessions      Session[]
+
+  postDrafts PostDraft[]
+  posts      Post[]
 
   @@map("users")
 }
@@ -67,40 +70,32 @@ model VerificationToken {
 
 model Post {
   id           Int       @id @default(autoincrement())
+  userId       Int       @map("user_id")
   title        String    @default("")
   content      String    @default("") @db.Text
   thumbnailUrl String?   @map("thumbnail_url")
   cleanUrl     String?   @map("clean_url")
   isPublic     Boolean   @map("is_public")
-  userId       Int       @map("user_id")
+  draftTitle   String?   @map("draft_title")
   createdAt    DateTime  @default(now()) @map("created_at")
   publishedAt  DateTime? @map("published_at")
   updatedAt    DateTime  @updatedAt @map("updated_at")
   deletedAt    DateTime? @map("deleted_at")
 
-  postDrafts PostDraft[]
+  postDrafts       PostDraft[]
+  postTagRelations PostTagRelation[]
+
+  user User @relation(fields: [userId], references: [id])
 
   @@map("posts")
-}
-
-model PostDraft {
-  id        Int       @id @default(autoincrement())
-  postId    Int?      @map("post_id")
-  title     String
-  content   String    @default("") @db.Text
-  tags      String[]
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
-  deletedAt DateTime? @map("deleted_at")
-
-  post Post? @relation(fields: [postId], references: [id])
-
-  @@map("post_drafts")
 }
 
 model PostTagRelation {
   postId Int @map("post_id")
   tagId  Int @map("tag_id")
+
+  post Post @relation(fields: [postId], references: [id])
+  tag  Tag  @relation(fields: [tagId], references: [id])
 
   @@id([postId, tagId])
   @@map("post_tag_relations")
@@ -110,7 +105,27 @@ model Tag {
   id   Int    @id @default(autoincrement())
   name String
 
+  postTagRelations PostTagRelation[]
+
   @@map("tags")
+}
+
+
+model PostDraft {
+  id        Int       @id @default(autoincrement())
+  userId    Int       @map("user_id")
+  postId    Int?      @map("post_id")
+  title     String
+  content   String    @default("") @db.Text
+  tags      String[]
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  post Post? @relation(fields: [postId], references: [id])
+  user User  @relation(fields: [userId], references: [id])
+
+  @@map("post_drafts")
 }
 
 model PostAnalysis {

@@ -6,7 +6,7 @@ export const WRITE_POST_USE_CASE = Symbol.for("WritePostUseCase");
 export interface WritePostUseCase {
   createPostDraft(
     userId: number,
-    postDraftData: CreatePostDraftDataDto,
-  ): PostDto;
+    createPostDraftData: CreatePostDraftDataDto,
+  ): Promise<PostDto>;
   // publishPost(post: CreatePostDataDto): PostDto;
 }
