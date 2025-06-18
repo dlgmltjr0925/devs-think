@@ -8,4 +8,5 @@ export interface PostDraftRepository {
     userId: number,
     createPostDraftData: CreatePostDraftDataDto,
   ): Promise<PostDraft>;
+  findPostDraftById(postDraftId: number): Promise<PostDraft | null>;
 }

@@ -27,4 +27,18 @@ export class PostDraftRepositoryAdapter implements PostDraftRepository {
 
     return PostDraftMapper.toDomain(createdPostDraft);
   }
+
+  async findPostDraftById(postDraftId: number): Promise<PostDraft | null> {
+    const postDraft = await this.prismaService.client.postDraft.findUnique({
+      where: {
+        id: postDraftId,
+      },
+    });
+
+    if (!postDraft) {
+      return null;
+    }
+
+    return PostDraftMapper.toDomain(postDraft);
+  }
 }
