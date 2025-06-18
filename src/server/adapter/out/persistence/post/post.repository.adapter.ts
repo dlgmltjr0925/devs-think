@@ -41,6 +41,23 @@ export class PostRepositoryAdapter implements PostRepository {
     return PostMapper.toDomain(createdPost);
   }
 
+  async findPostById(postId: number): Promise<Post | null> {
+    const post = await this.prismaService.client.post.findUnique({
+      where: {
+        id: postId,
+      },
+      include: {
+        postTagRelations: {
+          include: {
+            tag: true,
+          },
+        },
+      },
+    });
+
+    return post ? PostMapper.toDomain(post) : null;
+  }
+
   private async findTagsIfNotExistsCreate(tags: string[]) {
     const existingTags = await this.prismaService.tag.findMany({
       where: {
@@ -54,8 +71,14 @@ export class PostRepositoryAdapter implements PostRepository {
 
     const tagsToCreate = tags.filter((tag) => !existingTagNames.includes(tag));
 
+    if (tagsToCreate.length === 0) {
+      return existingTags;
+    }
+
     const createdTags = await this.prismaService.client.tag.createManyAndReturn(
-      { data: tagsToCreate.map((tag) => ({ name: tag })) },
+      {
+        data: tagsToCreate.map((tag) => ({ name: tag })),
+      },
     );
 
     return existingTags.concat(createdTags);
