@@ -21,4 +21,5 @@ export interface PostRepository {
     limit?: number,
   ): Promise<CursorBasedPaginationDto<Post>>;
   updatePost(postId: number, updatePostData: UpdatePostDataDto): Promise<Post>;
+  deletePost(postId: number): Promise<void>;
 }

@@ -193,4 +193,11 @@ export class PostRepositoryAdapter implements PostRepository {
 
     return PostMapper.toDomain(updatedPost);
   }
+
+  async deletePost(postId: number): Promise<void> {
+    await this.prismaService.client.post.update({
+      where: { id: postId },
+      data: { deletedAt: new Date() },
+    });
+  }
 }

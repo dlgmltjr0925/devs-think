@@ -12,14 +12,24 @@ import {
   type PostDraftRepository,
 } from "../port/out/repositories";
 import { transactional } from "~/server/infra/transaction";
-import { GetPostUseCase } from "../port/in/post";
+import {
+  DeletePostUseCase,
+  GetPostUseCase,
+  UpdatePostUseCase,
+} from "../port/in/post";
 import { CursorBasedPaginationDto } from "../dto/cursor-based-pagination.dto";
 import { UpdatePostDataDto } from "../dto/update-post-data.dto";
 import { NotFoundError } from "~/shared/error/not-found.error";
 import { ForbiddenError } from "~/shared/error";
 
 @Injectable()
-export class PostService implements CreatePostUseCase, GetPostUseCase {
+export class PostService
+  implements
+    CreatePostUseCase,
+    GetPostUseCase,
+    UpdatePostUseCase,
+    DeletePostUseCase
+{
   constructor(
     @Inject(POST_REPOSITORY) private readonly postRepository: PostRepository,
     @Inject(POST_DRAFT_REPOSITORY)
@@ -100,5 +110,19 @@ export class PostService implements CreatePostUseCase, GetPostUseCase {
     }
 
     return await this.postRepository.updatePost(postId, updatePostData);
+  }
+
+  async deletePost(userId: number, postId: number): Promise<void> {
+    const post = await this.postRepository.findPostById(postId);
+
+    if (!post) {
+      throw new NotFoundError();
+    }
+
+    if (post.userId !== userId) {
+      throw new ForbiddenError();
+    }
+
+    await this.postRepository.deletePost(postId);
   }
 }

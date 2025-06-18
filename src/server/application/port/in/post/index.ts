@@ -7,3 +7,7 @@ export {
   UPDATE_POST_USE_CASE,
   type UpdatePostUseCase,
 } from "./update-post.use-case";
+export {
+  DELETE_POST_USE_CASE,
+  type DeletePostUseCase,
+} from "./delete-post.use-case";
