@@ -22,6 +22,7 @@ import {
 } from "~/server/application/port/in/post";
 import {
   CREATE_SKILL_USE_CASE,
+  DELETE_SKILL_USE_CASE,
   GET_SKILL_USE_CASE,
   UPDATE_SKILL_USE_CASE,
 } from "~/server/application/port/in/skill";
@@ -57,3 +58,4 @@ di.registerSingleton(DELETE_POST_USE_CASE, PostService);
 di.registerSingleton(CREATE_SKILL_USE_CASE, SkillService);
 di.registerSingleton(GET_SKILL_USE_CASE, SkillService);
 di.registerSingleton(UPDATE_SKILL_USE_CASE, SkillService);
+di.registerSingleton(DELETE_SKILL_USE_CASE, SkillService);

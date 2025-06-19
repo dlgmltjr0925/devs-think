@@ -73,4 +73,18 @@ export class SkillService
 
     return SkillMapper.toDto(updatedSkill);
   }
+
+  async deleteSkill(userId: number, skillId: number): Promise<void> {
+    const skill = await this.skillRepository.findSkillById(skillId);
+
+    if (!skill) {
+      throw new NotFoundError();
+    }
+
+    if (skill.userId !== userId) {
+      throw new ForbiddenError();
+    }
+
+    await this.skillRepository.deleteSkill(skillId);
+  }
 }

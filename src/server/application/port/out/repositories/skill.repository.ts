@@ -15,4 +15,5 @@ export interface SkillRepository {
     skillId: number,
     updateSkillData: UpdateSkillDataDto,
   ): Promise<Skill>;
+  deleteSkill(skillId: number): Promise<void>;
 }

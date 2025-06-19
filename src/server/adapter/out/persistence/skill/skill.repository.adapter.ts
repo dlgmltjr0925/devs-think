@@ -71,4 +71,11 @@ export class SkillRepositoryAdapter implements SkillRepository {
 
     return SkillMapper.toDomain(skill);
   }
+
+  async deleteSkill(skillId: number): Promise<void> {
+    await this.prismaService.skill.update({
+      where: { id: skillId },
+      data: { deletedAt: new Date() },
+    });
+  }
 }
