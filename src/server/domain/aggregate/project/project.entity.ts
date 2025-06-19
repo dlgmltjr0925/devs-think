@@ -2,7 +2,7 @@ interface ProjectConstructorArgs {
   id: number;
   userId: number;
   title: string;
-  description?: string;
+  description: string | null;
   role: string | null;
   startDate: Date;
   endDate: Date | null;
@@ -18,7 +18,7 @@ export class Project {
   id: number;
   userId: number;
   title: string;
-  description?: string;
+  description: string | null;
   role: string | null;
   startDate: Date;
   endDate: Date | null;
