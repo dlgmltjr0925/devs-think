@@ -13,7 +13,6 @@ export class PostMapper {
       isPublic: post.isPublic,
       userId: post.userId,
       createdAt: post.createdAt,
-      publishedAt: post.publishedAt,
       updatedAt: post.updatedAt,
       deletedAt: post.deletedAt,
     };
