@@ -1,6 +1,7 @@
 import { Inject, Injectable } from "~/server/infra/core";
 import {
   CreateProjectUseCase,
+  DeleteProjectUseCase,
   GetProjectUseCase,
   UpdateProjectUseCase,
 } from "../port/in/project";
@@ -17,7 +18,11 @@ import { ForbiddenError } from "~/shared/error";
 
 @Injectable()
 export class ProjectService
-  implements CreateProjectUseCase, GetProjectUseCase, UpdateProjectUseCase
+  implements
+    CreateProjectUseCase,
+    GetProjectUseCase,
+    UpdateProjectUseCase,
+    DeleteProjectUseCase
 {
   constructor(
     @Inject(PROJECT_REPOSITORY)
@@ -73,5 +78,19 @@ export class ProjectService
     );
 
     return ProjectMapper.toDto(updatedProject);
+  }
+
+  async deleteProject(userId: number, projectId: number): Promise<void> {
+    const project = await this.projectRepository.findProjectById(projectId);
+
+    if (!project) {
+      throw new NotFoundError();
+    }
+
+    if (project.userId !== userId) {
+      throw new ForbiddenError();
+    }
+
+    await this.projectRepository.deleteProject(projectId);
   }
 }

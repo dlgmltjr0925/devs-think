@@ -15,4 +15,5 @@ export interface ProjectRepository {
     projectId: number,
     updateProjectData: UpdateProjectDataDto,
   ): Promise<Project>;
+  deleteProject(projectId: number): Promise<void>;
 }

@@ -74,4 +74,11 @@ export class ProjectRepositoryAdapter implements ProjectRepository {
 
     return ProjectMapper.toDomain(project);
   }
+
+  async deleteProject(projectId: number): Promise<void> {
+    await this.prismaService.project.update({
+      where: { id: projectId },
+      data: { deletedAt: new Date() },
+    });
+  }
 }

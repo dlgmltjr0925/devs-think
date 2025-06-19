@@ -30,6 +30,7 @@ import {
 } from "~/server/application/port/in/skill";
 import {
   CREATE_PROJECT_USE_CASE,
+  DELETE_PROJECT_USE_CASE,
   GET_PROJECT_USE_CASE,
   UPDATE_PROJECT_USE_CASE,
 } from "~/server/application/port/in/project";
@@ -76,3 +77,4 @@ di.registerSingleton(DELETE_SKILL_USE_CASE, SkillService);
 di.registerSingleton(CREATE_PROJECT_USE_CASE, ProjectService);
 di.registerSingleton(GET_PROJECT_USE_CASE, ProjectService);
 di.registerSingleton(UPDATE_PROJECT_USE_CASE, ProjectService);
+di.registerSingleton(DELETE_PROJECT_USE_CASE, ProjectService);
