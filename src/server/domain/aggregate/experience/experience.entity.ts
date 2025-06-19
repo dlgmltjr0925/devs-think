@@ -1,9 +1,10 @@
-import { ExperienceMedia, VolunteerDetail } from "@prisma/client";
 import { AwardDetail } from "./award-detail.entity";
 import { CertificationDetail } from "./certification-detail.entity";
 import { ExperienceType } from "./experience-type.enum";
 import { LanguageDetail } from "./language-detail.entity";
 import { Skill } from "../skill";
+import { VolunteerDetail } from "./volunteer-detail.entity";
+import { ExperienceMedia } from "./experience-media.entity";
 
 export class Experience {
   id: number;
