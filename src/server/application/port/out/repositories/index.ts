@@ -8,3 +8,4 @@ export {
   PROJECT_REPOSITORY,
   type ProjectRepository,
 } from "./project.repository";
+export { CAREER_REPOSITORY, type CareerRepository } from "./career.repository";

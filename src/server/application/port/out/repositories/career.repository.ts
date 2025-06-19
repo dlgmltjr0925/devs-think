@@ -1,0 +1,11 @@
+import { CreateCareerDataDto } from "~/server/application/dto/create-career-data.dto";
+import { Career } from "~/server/domain/aggregate/career/career.entity";
+
+export const CAREER_REPOSITORY = Symbol.for("CareerRepository");
+
+export interface CareerRepository {
+  createCareer(
+    userId: number,
+    createCareerData: CreateCareerDataDto,
+  ): Promise<Career>;
+}

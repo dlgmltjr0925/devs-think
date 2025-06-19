@@ -4,6 +4,7 @@ import { container } from "tsyringe";
 import { PRISMA_SERVICE, PrismaService } from "../database/prisma.service";
 import { PostService } from "~/server/application/services/post.service";
 import {
+  CAREER_REPOSITORY,
   POST_DRAFT_REPOSITORY,
   POST_REPOSITORY,
   PROJECT_REPOSITORY,
@@ -38,10 +39,13 @@ import {
   PostDraftService,
   ProjectService,
   SkillService,
+  CareerService,
 } from "~/server/application/services";
+import { CREATE_CAREER_USE_CASE } from "~/server/application/port/in/career";
 import { PostRepositoryAdapter } from "~/server/adapter/out/persistence/post";
 import { SkillRepositoryAdapter } from "~/server/adapter/out/persistence/skill";
 import { ProjectRepositoryAdapter } from "~/server/adapter/out/persistence/project";
+import { CareerRepositoryAdapter } from "~/server/adapter/out/persistence/career";
 
 export const di = container;
 
@@ -53,6 +57,7 @@ di.registerSingleton(POST_DRAFT_REPOSITORY, PostDraftRepositoryAdapter);
 di.registerSingleton(POST_REPOSITORY, PostRepositoryAdapter);
 di.registerSingleton(SKILL_REPOSITORY, SkillRepositoryAdapter);
 di.registerSingleton(PROJECT_REPOSITORY, ProjectRepositoryAdapter);
+di.registerSingleton(CAREER_REPOSITORY, CareerRepositoryAdapter);
 
 // Service Providers
 // post draft service
@@ -78,3 +83,6 @@ di.registerSingleton(CREATE_PROJECT_USE_CASE, ProjectService);
 di.registerSingleton(GET_PROJECT_USE_CASE, ProjectService);
 di.registerSingleton(UPDATE_PROJECT_USE_CASE, ProjectService);
 di.registerSingleton(DELETE_PROJECT_USE_CASE, ProjectService);
+
+// career service
+di.registerSingleton(CREATE_CAREER_USE_CASE, CareerService);
