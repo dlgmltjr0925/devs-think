@@ -4,6 +4,7 @@ import { PRISMA_SERVICE, PrismaService } from "~/server/infra/database";
 import { CreateSkillDataDto } from "~/server/application/dto/create-skill-data.dto";
 import { Skill } from "~/server/domain/entities/skill";
 import { SkillMapper } from "./mappers/skill.mapper";
+import { UpdateSkillDataDto } from "~/server/application/dto/update-skill-data.dto";
 
 @Injectable()
 export class SkillRepositoryAdapter implements SkillRepository {
@@ -52,5 +53,22 @@ export class SkillRepositoryAdapter implements SkillRepository {
     });
 
     return skills.map(SkillMapper.toDomain);
+  }
+
+  async updateSkill(
+    skillId: number,
+    updateSkillData: UpdateSkillDataDto,
+  ): Promise<Skill> {
+    const skill = await this.prismaService.skill.update({
+      where: { id: skillId },
+      data: {
+        name: updateSkillData.name,
+        description: updateSkillData.description,
+        category: updateSkillData.category,
+        level: updateSkillData.level,
+      },
+    });
+
+    return SkillMapper.toDomain(skill);
   }
 }
