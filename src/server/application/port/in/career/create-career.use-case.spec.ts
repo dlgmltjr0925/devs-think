@@ -6,7 +6,7 @@ import {
 import { di } from "~/server/infra/di";
 import { User } from "~/server/domain/aggregate/user";
 import { UserTestFeature } from "~/server/application/__mocks__/user";
-import { CreateCareerDataDto } from "~/server/application/dto/create-career-data.dto";
+import { mockCreateCareerDataDto } from "~/server/application/__mocks__/career";
 import { test } from "~/server/infra/test";
 
 describe("CreateCareerUseCase", () => {
@@ -31,55 +31,42 @@ describe("CreateCareerUseCase", () => {
   describe("createCareer", () => {
     test("커리어 생성 성공", async () => {
       // given
-      const createCareerData: CreateCareerDataDto = {
-        companyName: "Test Company",
-        position: "Test Position",
-        employmentType: "FullTime",
-        locationType: "Office",
-        location: "Test Location",
-        startDate: new Date(),
-        endDate: null,
-        isCurrentPosition: false,
-        description: "Test Description",
-        responsibilities: "Test Responsibilities",
-        url: "https://test.com",
-        achievements: [
-          {
-            description: "Test Achievement",
-            metrics: "Test Metrics",
-          },
-        ],
-      };
 
       // when
       const career = await createCareerUseCase.createCareer(
         testUser.id,
-        createCareerData,
+        mockCreateCareerDataDto,
       );
 
       // then
       expect(career).toBeDefined();
-      expect(career.companyName).toBe(createCareerData.companyName);
-      expect(career.position).toBe(createCareerData.position);
-      expect(career.employmentType).toBe(createCareerData.employmentType);
-      expect(career.locationType).toBe(createCareerData.locationType);
-      expect(career.location).toBe(createCareerData.location);
-      expect(career.startDate).toStrictEqual(createCareerData.startDate);
-      expect(career.endDate).toStrictEqual(createCareerData.endDate);
-      expect(career.isCurrentPosition).toBe(createCareerData.isCurrentPosition);
-      expect(career.description).toBe(createCareerData.description);
-      expect(career.responsibilities).toBe(createCareerData.responsibilities);
-      expect(career.url).toBe(createCareerData.url);
+      expect(career.companyName).toBe(mockCreateCareerDataDto.companyName);
+      expect(career.position).toBe(mockCreateCareerDataDto.position);
+      expect(career.employmentType).toBe(
+        mockCreateCareerDataDto.employmentType,
+      );
+      expect(career.locationType).toBe(mockCreateCareerDataDto.locationType);
+      expect(career.location).toBe(mockCreateCareerDataDto.location);
+      expect(career.startDate).toStrictEqual(mockCreateCareerDataDto.startDate);
+      expect(career.endDate).toStrictEqual(mockCreateCareerDataDto.endDate);
+      expect(career.isCurrentPosition).toBe(
+        mockCreateCareerDataDto.isCurrentPosition,
+      );
+      expect(career.description).toBe(mockCreateCareerDataDto.description);
+      expect(career.responsibilities).toBe(
+        mockCreateCareerDataDto.responsibilities,
+      );
+      expect(career.url).toBe(mockCreateCareerDataDto.url);
       expect(career.createdAt).toBeDefined();
       expect(career.updatedAt).toBeDefined();
 
       career.achievements.forEach((achievement) => {
         expect(achievement).toBeDefined();
         expect(achievement.description).toBe(
-          createCareerData.achievements[0].description,
+          mockCreateCareerDataDto.achievements[0].description,
         );
         expect(achievement.metrics).toBe(
-          createCareerData.achievements[0].metrics,
+          mockCreateCareerDataDto.achievements[0].metrics,
         );
         expect(achievement.createdAt).toBeDefined();
         expect(achievement.updatedAt).toBeDefined();

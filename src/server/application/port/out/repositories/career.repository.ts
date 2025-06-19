@@ -8,4 +8,6 @@ export interface CareerRepository {
     userId: number,
     createCareerData: CreateCareerDataDto,
   ): Promise<Career>;
+  findCareerById(careerId: number): Promise<Career | null>;
+  findCareersByUserId(userId: number): Promise<Career[]>;
 }

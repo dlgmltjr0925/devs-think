@@ -44,4 +44,36 @@ export class CareerRepositoryAdapter implements CareerRepository {
 
     return CareerMapper.toDomain(career);
   }
+
+  async findCareerById(careerId: number): Promise<Career | null> {
+    const career = await this.prismaService.career.findUnique({
+      where: {
+        id: careerId,
+        deletedAt: null,
+      },
+      include: {
+        achievements: true,
+      },
+    });
+
+    if (!career) {
+      return null;
+    }
+
+    return CareerMapper.toDomain(career);
+  }
+
+  async findCareersByUserId(userId: number): Promise<Career[]> {
+    const careers = await this.prismaService.career.findMany({
+      where: {
+        userId,
+        deletedAt: null,
+      },
+      include: {
+        achievements: true,
+      },
+    });
+
+    return careers.map(CareerMapper.toDomain);
+  }
 }

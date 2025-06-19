@@ -41,7 +41,10 @@ import {
   SkillService,
   CareerService,
 } from "~/server/application/services";
-import { CREATE_CAREER_USE_CASE } from "~/server/application/port/in/career";
+import {
+  CREATE_CAREER_USE_CASE,
+  GET_CAREER_USE_CASE,
+} from "~/server/application/port/in/career";
 import { PostRepositoryAdapter } from "~/server/adapter/out/persistence/post";
 import { SkillRepositoryAdapter } from "~/server/adapter/out/persistence/skill";
 import { ProjectRepositoryAdapter } from "~/server/adapter/out/persistence/project";
@@ -86,3 +89,4 @@ di.registerSingleton(DELETE_PROJECT_USE_CASE, ProjectService);
 
 // career service
 di.registerSingleton(CREATE_CAREER_USE_CASE, CareerService);
+di.registerSingleton(GET_CAREER_USE_CASE, CareerService);
