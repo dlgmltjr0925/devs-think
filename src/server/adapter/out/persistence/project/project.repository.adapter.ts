@@ -4,6 +4,7 @@ import { Project } from "~/server/domain/aggregate/project";
 import { Inject, Injectable } from "~/server/infra/core";
 import { PRISMA_SERVICE, PrismaService } from "~/server/infra/database";
 import { ProjectMapper } from "./mappers/project.mapper";
+import { UpdateProjectDataDto } from "~/server/application/dto/update-project-data.dto";
 
 @Injectable()
 export class ProjectRepositoryAdapter implements ProjectRepository {
@@ -51,5 +52,26 @@ export class ProjectRepositoryAdapter implements ProjectRepository {
     });
 
     return projects.map(ProjectMapper.toDomain);
+  }
+
+  async updateProject(
+    projectId: number,
+    updateProjectData: UpdateProjectDataDto,
+  ): Promise<Project> {
+    const project = await this.prismaService.project.update({
+      where: { id: projectId },
+      data: {
+        title: updateProjectData.title,
+        description: updateProjectData.description,
+        role: updateProjectData.role,
+        startDate: updateProjectData.startDate,
+        endDate: updateProjectData.endDate,
+        isOngoing: updateProjectData.isOngoing,
+        url: updateProjectData.url,
+        repositoryUrl: updateProjectData.repositoryUrl,
+      },
+    });
+
+    return ProjectMapper.toDomain(project);
   }
 }

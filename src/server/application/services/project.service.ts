@@ -1,5 +1,9 @@
 import { Inject, Injectable } from "~/server/infra/core";
-import { CreateProjectUseCase } from "../port/in/project";
+import {
+  CreateProjectUseCase,
+  GetProjectUseCase,
+  UpdateProjectUseCase,
+} from "../port/in/project";
 import {
   PROJECT_REPOSITORY,
   type ProjectRepository,
@@ -7,9 +11,14 @@ import {
 import { CreateProjectDataDto } from "../dto/create-project-data.dto";
 import { ProjectDto } from "../dto/project.dto";
 import { ProjectMapper } from "../mappers/project";
+import { UpdateProjectDataDto } from "../dto/update-project-data.dto";
+import { NotFoundError } from "~/shared/error/not-found.error";
+import { ForbiddenError } from "~/shared/error";
 
 @Injectable()
-export class ProjectService implements CreateProjectUseCase {
+export class ProjectService
+  implements CreateProjectUseCase, GetProjectUseCase, UpdateProjectUseCase
+{
   constructor(
     @Inject(PROJECT_REPOSITORY)
     private readonly projectRepository: ProjectRepository,
@@ -41,5 +50,28 @@ export class ProjectService implements CreateProjectUseCase {
     const projects = await this.projectRepository.findProjectsByUserId(userId);
 
     return projects.map(ProjectMapper.toDto);
+  }
+
+  async updateProject(
+    userId: number,
+    projectId: number,
+    updateProjectData: UpdateProjectDataDto,
+  ): Promise<ProjectDto> {
+    const project = await this.projectRepository.findProjectById(projectId);
+
+    if (!project) {
+      throw new NotFoundError();
+    }
+
+    if (project.userId !== userId) {
+      throw new ForbiddenError();
+    }
+
+    const updatedProject = await this.projectRepository.updateProject(
+      projectId,
+      updateProjectData,
+    );
+
+    return ProjectMapper.toDto(updatedProject);
   }
 }

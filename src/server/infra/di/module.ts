@@ -31,6 +31,7 @@ import {
 import {
   CREATE_PROJECT_USE_CASE,
   GET_PROJECT_USE_CASE,
+  UPDATE_PROJECT_USE_CASE,
 } from "~/server/application/port/in/project";
 import {
   PostDraftService,
@@ -74,3 +75,4 @@ di.registerSingleton(DELETE_SKILL_USE_CASE, SkillService);
 // project service
 di.registerSingleton(CREATE_PROJECT_USE_CASE, ProjectService);
 di.registerSingleton(GET_PROJECT_USE_CASE, ProjectService);
+di.registerSingleton(UPDATE_PROJECT_USE_CASE, ProjectService);
