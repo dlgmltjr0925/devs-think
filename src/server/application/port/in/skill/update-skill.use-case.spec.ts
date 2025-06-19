@@ -4,7 +4,7 @@ import {
   UpdateSkillUseCase,
 } from "./update-skill.use-case";
 import { SkillTestFeature } from "~/server/application/__mocks__/skill";
-import { User } from "~/server/domain/user";
+import { User } from "~/server/domain/aggregate/user";
 import { di } from "~/server/infra/di";
 import { UserTestFeature } from "~/server/application/__mocks__/user";
 import { UpdateSkillDataDto } from "~/server/application/dto/update-skill-data.dto";

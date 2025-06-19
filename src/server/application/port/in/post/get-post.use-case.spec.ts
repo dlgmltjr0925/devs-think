@@ -2,7 +2,7 @@ import { beforeAll, describe, expect, it } from "vitest";
 import { GET_POST_USE_CASE, GetPostUseCase } from "./get-post.use-case";
 import { di } from "~/server/infra/di";
 import { PostTestFeature } from "~/server/application/__mocks__/post";
-import { User } from "~/server/domain/user";
+import { User } from "~/server/domain/aggregate/user";
 import { UserTestFeature } from "~/server/application/__mocks__/user";
 import { test } from "~/server/infra/test";
 

@@ -6,7 +6,7 @@ import {
 import { di } from "~/server/infra/di";
 import { test } from "~/server/infra/test";
 import { UserTestFeature } from "~/server/application/__mocks__/user";
-import { User } from "~/server/domain/user";
+import { User } from "~/server/domain/aggregate/user";
 import { PostDraftTestFeature } from "~/server/application/__mocks__/post-draft";
 import { mockCreatePostData } from "~/server/application/__mocks__/post";
 

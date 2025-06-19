@@ -5,7 +5,7 @@ import {
 } from "./create-skill.use-case";
 import { di } from "~/server/infra/di";
 import { test } from "~/server/infra/test";
-import { User } from "~/server/domain/user";
+import { User } from "~/server/domain/aggregate/user";
 import { UserTestFeature } from "~/server/application/__mocks__/user";
 import { CreateSkillDataDto } from "~/server/application/dto/create-skill-data.dto";
 

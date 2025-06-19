@@ -6,7 +6,7 @@ import {
   CreatePostDraftUseCase,
 } from "~/server/application/port/in/post-draft";
 import { di } from "~/server/infra/di";
-import { User } from "~/server/domain/user";
+import { User } from "~/server/domain/aggregate/user";
 import { test } from "~/server/infra/test";
 import { UserTestFeature } from "~/server/application/__mocks__/user";
 import { mockCreatePostDraftData } from "~/server/application/__mocks__/post-draft/mocks";

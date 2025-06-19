@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto";
-import { User } from "~/server/domain/user";
+import { User } from "~/server/domain/aggregate/user";
 import { Inject, Injectable } from "~/server/infra/core";
 import { PRISMA_SERVICE, PrismaService } from "~/server/infra/database";
 
