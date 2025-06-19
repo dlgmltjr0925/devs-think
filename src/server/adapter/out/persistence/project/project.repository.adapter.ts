@@ -31,4 +31,25 @@ export class ProjectRepositoryAdapter implements ProjectRepository {
 
     return ProjectMapper.toDomain(project);
   }
+
+  async findProjectById(projectId: number): Promise<Project | null> {
+    const project = await this.prismaService.project.findUnique({
+      where: { id: projectId, deletedAt: null },
+    });
+
+    if (!project) {
+      return null;
+    }
+
+    return ProjectMapper.toDomain(project);
+  }
+
+  async findProjectsByUserId(userId: number): Promise<Project[]> {
+    const projects = await this.prismaService.project.findMany({
+      where: { userId, deletedAt: null },
+      orderBy: { startDate: "desc" },
+    });
+
+    return projects.map(ProjectMapper.toDomain);
+  }
 }

@@ -26,4 +26,20 @@ export class ProjectService implements CreateProjectUseCase {
 
     return ProjectMapper.toDto(project);
   }
+
+  async getProject(projectId: number): Promise<ProjectDto | null> {
+    const project = await this.projectRepository.findProjectById(projectId);
+
+    if (!project) {
+      return null;
+    }
+
+    return ProjectMapper.toDto(project);
+  }
+
+  async getProjectsByUserId(userId: number): Promise<ProjectDto[]> {
+    const projects = await this.projectRepository.findProjectsByUserId(userId);
+
+    return projects.map(ProjectMapper.toDto);
+  }
 }

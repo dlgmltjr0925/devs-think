@@ -8,4 +8,6 @@ export interface ProjectRepository {
     userId: number,
     createProjectData: CreateProjectDataDto,
   ): Promise<Project>;
+  findProjectById(projectId: number): Promise<Project | null>;
+  findProjectsByUserId(userId: number): Promise<Project[]>;
 }
