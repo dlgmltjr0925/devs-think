@@ -1,4 +1,5 @@
 import { CreateCareerDataDto } from "~/server/application/dto/create-career-data.dto";
+import { UpdateCareerDataDto } from "~/server/application/dto/update-career-data.dto";
 import { CareerRepository } from "~/server/application/port/out/repositories";
 import { Career } from "~/server/domain/aggregate/career";
 import { Inject, Injectable } from "~/server/infra/core";
@@ -16,7 +17,7 @@ export class CareerRepositoryAdapter implements CareerRepository {
     userId: number,
     createCareerData: CreateCareerDataDto,
   ): Promise<Career> {
-    const career = await this.prismaService.career.create({
+    const career = await this.prismaService.client.career.create({
       data: {
         userId,
         companyName: createCareerData.companyName,
@@ -46,7 +47,7 @@ export class CareerRepositoryAdapter implements CareerRepository {
   }
 
   async findCareerById(careerId: number): Promise<Career | null> {
-    const career = await this.prismaService.career.findUnique({
+    const career = await this.prismaService.client.career.findFirst({
       where: {
         id: careerId,
         deletedAt: null,
@@ -75,5 +76,74 @@ export class CareerRepositoryAdapter implements CareerRepository {
     });
 
     return careers.map(CareerMapper.toDomain);
+  }
+
+  async updateCareer(
+    careerId: number,
+    updateCareerData: UpdateCareerDataDto,
+  ): Promise<Career> {
+    // career achievements 삭제 처리
+    await this.prismaService.client.careerAchievement.updateMany({
+      where: {
+        id: {
+          notIn: updateCareerData.achievements
+            .filter((achievement) => achievement.id !== null)
+            .map((achievement) => achievement.id as number),
+        },
+      },
+      data: {
+        deletedAt: new Date(),
+      },
+    });
+
+    // career achievements 업데이트 처리
+    await Promise.all(
+      updateCareerData.achievements
+        .filter((achievement) => achievement.id !== null)
+        .map((achievement) =>
+          this.prismaService.client.careerAchievement.update({
+            where: { id: achievement.id as number },
+            data: {
+              description: achievement.description,
+              metrics: achievement.metrics,
+            },
+          }),
+        ),
+    );
+
+    // career 업데이트 처리
+    const updatedCareer = await this.prismaService.client.career.update({
+      where: {
+        id: careerId,
+      },
+      data: {
+        companyName: updateCareerData.companyName,
+        position: updateCareerData.position,
+        employmentType: updateCareerData.employmentType,
+        locationType: updateCareerData.locationType,
+        location: updateCareerData.location,
+        startDate: updateCareerData.startDate,
+        endDate: updateCareerData.endDate,
+        isCurrentPosition: updateCareerData.isCurrentPosition,
+        description: updateCareerData.description,
+        responsibilities: updateCareerData.responsibilities,
+        url: updateCareerData.url,
+        achievements: {
+          createMany: {
+            data: updateCareerData.achievements
+              .filter((achievement) => achievement.id === null)
+              .map((achievement) => ({
+                description: achievement.description,
+                metrics: achievement.metrics,
+              })),
+          },
+        },
+      },
+      include: {
+        achievements: true,
+      },
+    });
+
+    return CareerMapper.toDomain(updatedCareer);
   }
 }

@@ -6,3 +6,7 @@ export {
   GET_CAREER_USE_CASE,
   type GetCareerUseCase,
 } from "./get-career.use-case";
+export {
+  UPDATE_CAREER_USE_CASE,
+  type UpdateCareerUseCase,
+} from "./update-career.use-case";
