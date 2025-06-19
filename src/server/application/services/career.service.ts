@@ -1,6 +1,7 @@
 import { Inject, Injectable } from "~/server/infra/core";
 import {
   CreateCareerUseCase,
+  DeleteCareerUseCase,
   GetCareerUseCase,
   UpdateCareerUseCase,
 } from "../port/in/career";
@@ -17,7 +18,11 @@ import { NotFoundError } from "~/shared/error/not-found.error";
 
 @Injectable()
 export class CareerService
-  implements CreateCareerUseCase, GetCareerUseCase, UpdateCareerUseCase
+  implements
+    CreateCareerUseCase,
+    GetCareerUseCase,
+    UpdateCareerUseCase,
+    DeleteCareerUseCase
 {
   constructor(
     @Inject(CAREER_REPOSITORY)
@@ -73,5 +78,19 @@ export class CareerService
     );
 
     return CareerMapper.toDto(updatedCareer);
+  }
+
+  async deleteCareer(userId: number, careerId: number): Promise<void> {
+    const career = await this.careerRepository.findCareerById(careerId);
+
+    if (!career) {
+      throw new NotFoundError();
+    }
+
+    if (career.userId !== userId) {
+      throw new ForbiddenError();
+    }
+
+    await this.careerRepository.deleteCareer(careerId);
   }
 }

@@ -43,6 +43,7 @@ import {
 } from "~/server/application/services";
 import {
   CREATE_CAREER_USE_CASE,
+  DELETE_CAREER_USE_CASE,
   GET_CAREER_USE_CASE,
   UPDATE_CAREER_USE_CASE,
 } from "~/server/application/port/in/career";
@@ -92,3 +93,4 @@ di.registerSingleton(DELETE_PROJECT_USE_CASE, ProjectService);
 di.registerSingleton(CREATE_CAREER_USE_CASE, CareerService);
 di.registerSingleton(GET_CAREER_USE_CASE, CareerService);
 di.registerSingleton(UPDATE_CAREER_USE_CASE, CareerService);
+di.registerSingleton(DELETE_CAREER_USE_CASE, CareerService);

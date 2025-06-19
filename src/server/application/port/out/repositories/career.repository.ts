@@ -15,4 +15,5 @@ export interface CareerRepository {
     careerId: number,
     updateCareerData: UpdateCareerDataDto,
   ): Promise<Career>;
+  deleteCareer(careerId: number): Promise<void>;
 }

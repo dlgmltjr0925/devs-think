@@ -146,4 +146,11 @@ export class CareerRepositoryAdapter implements CareerRepository {
 
     return CareerMapper.toDomain(updatedCareer);
   }
+
+  async deleteCareer(careerId: number): Promise<void> {
+    await this.prismaService.client.career.update({
+      where: { id: careerId },
+      data: { deletedAt: new Date() },
+    });
+  }
 }
