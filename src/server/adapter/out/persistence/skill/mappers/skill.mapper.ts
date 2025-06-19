@@ -1,7 +1,7 @@
 import { Prisma } from "@prisma/client";
-import { Skill } from "~/server/domain/entities/skill";
-import { SkillCategory } from "~/server/domain/entities/skill/skill-category.entity";
-import { SkillLevel } from "~/server/domain/entities/skill/skill-level.entity";
+import { Skill } from "~/server/domain/aggregate/skill";
+import { SkillCategory } from "~/server/domain/aggregate/skill/skill-category.entity";
+import { SkillLevel } from "~/server/domain/aggregate/skill/skill-level.entity";
 
 export class SkillMapper {
   static toDomain(skill: Prisma.SkillGetPayload<object>): Skill {

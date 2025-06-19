@@ -2,7 +2,7 @@ import { PostDraftRepository } from "~/server/application/port/out/repositories/
 import { Inject, Injectable } from "~/server/infra/core";
 import { PRISMA_SERVICE, PrismaService } from "~/server/infra/database";
 import { PostDraftMapper } from "./mappers/post-draft.mapper";
-import { PostDraft } from "~/server/domain/entities/post-draft";
+import { PostDraft } from "~/server/domain/aggregate/post-draft";
 import { CreatePostDraftDataDto } from "~/server/application/dto/create-post-draft-data.dto";
 
 @Injectable()

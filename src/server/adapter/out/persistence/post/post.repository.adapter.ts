@@ -1,6 +1,6 @@
 import { CreatePostDataDto } from "~/server/application/dto/create-post-data.dto";
 import { PostRepository } from "~/server/application/port/out/repositories";
-import { Post } from "~/server/domain/entities/post";
+import { Post } from "~/server/domain/aggregate/post";
 import { Inject, Injectable } from "~/server/infra/core";
 import { PRISMA_SERVICE, PrismaService } from "~/server/infra/database";
 import { PostMapper } from "./mappers/post.mapper";

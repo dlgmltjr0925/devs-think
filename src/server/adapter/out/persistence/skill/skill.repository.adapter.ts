@@ -2,7 +2,7 @@ import { Inject, Injectable } from "~/server/infra/core";
 import { SkillRepository } from "~/server/application/port/out/repositories";
 import { PRISMA_SERVICE, PrismaService } from "~/server/infra/database";
 import { CreateSkillDataDto } from "~/server/application/dto/create-skill-data.dto";
-import { Skill } from "~/server/domain/entities/skill";
+import { Skill } from "~/server/domain/aggregate/skill";
 import { SkillMapper } from "./mappers/skill.mapper";
 import { UpdateSkillDataDto } from "~/server/application/dto/update-skill-data.dto";
 

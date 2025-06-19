@@ -1,4 +1,4 @@
-import { Skill } from "~/server/domain/entities/skill";
+import { Skill } from "~/server/domain/aggregate/skill";
 import { SkillDto } from "~/server/application/dto/skill.dto";
 
 export class SkillMapper {

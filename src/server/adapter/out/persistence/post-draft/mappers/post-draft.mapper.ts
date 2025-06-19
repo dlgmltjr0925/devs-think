@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client";
-import { PostDraft } from "~/server/domain/entities/post-draft";
+import { PostDraft } from "~/server/domain/aggregate/post-draft";
 
 export class PostDraftMapper {
   static toDomain(postDraft: Prisma.PostDraftGetPayload<object>): PostDraft {

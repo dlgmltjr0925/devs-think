@@ -1,5 +1,5 @@
 import { CreatePostDraftDataDto } from "~/server/application/dto/create-post-draft-data.dto";
-import { PostDraft } from "~/server/domain/entities/post-draft";
+import { PostDraft } from "~/server/domain/aggregate/post-draft";
 
 export const POST_DRAFT_REPOSITORY = Symbol.for("PostDraftRepository");
 

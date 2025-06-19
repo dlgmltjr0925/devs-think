@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client";
-import { Post } from "~/server/domain/entities/post";
+import { Post } from "~/server/domain/aggregate/post";
 
 type PrismaPost = Prisma.PostGetPayload<{
   include: {
