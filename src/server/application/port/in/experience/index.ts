@@ -10,3 +10,7 @@ export {
   UPDATE_EXPERIENCE_USE_CASE,
   type UpdateExperienceUseCase,
 } from "./update-experience.use-case";
+export {
+  DELETE_EXPERIENCE_USE_CASE,
+  type DeleteExperienceUseCase,
+} from "./delete-experience.use-case";

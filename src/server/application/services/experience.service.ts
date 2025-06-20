@@ -1,6 +1,7 @@
 import { Inject, Injectable } from "~/server/infra/core";
 import {
   CreateExperienceUseCase,
+  DeleteExperienceUseCase,
   GetExperienceUseCase,
   UpdateExperienceUseCase,
 } from "../port/in/experience";
@@ -15,13 +16,15 @@ import {
 import { ExperienceMapper } from "../mappers/experience/experience.mapper";
 import { SkillMapper } from "../mappers/skill";
 import { UpdateExperienceDataDto } from "../dto/update-experience-data.dto";
+import { ForbiddenError, NotFoundError } from "~/shared/error";
 
 @Injectable()
 export class ExperienceService
   implements
     CreateExperienceUseCase,
     GetExperienceUseCase,
-    UpdateExperienceUseCase
+    UpdateExperienceUseCase,
+    DeleteExperienceUseCase
 {
   constructor(
     @Inject(EXPERIENCE_REPOSITORY)
@@ -107,5 +110,20 @@ export class ExperienceService
       updatedExperience,
       skills.map(SkillMapper.toDto),
     );
+  }
+
+  async deleteExperience(userId: number, experienceId: number): Promise<void> {
+    const experience =
+      await this.experienceRepository.findExperienceById(experienceId);
+
+    if (!experience) {
+      throw new NotFoundError();
+    }
+
+    if (experience.userId !== userId) {
+      throw new ForbiddenError();
+    }
+
+    await this.experienceRepository.deleteExperience(experienceId);
   }
 }

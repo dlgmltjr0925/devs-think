@@ -235,6 +235,13 @@ export class ExperienceRepositoryAdapter implements ExperienceRepository {
     return ExperienceMapper.toDomain(updatedExperience);
   }
 
+  async deleteExperience(experienceId: number): Promise<void> {
+    await this.prismaService.client.experience.update({
+      where: { id: experienceId },
+      data: { deletedAt: new Date() },
+    });
+  }
+
   private get include() {
     return {
       certificationDetail: true,

@@ -15,4 +15,5 @@ export interface ExperienceRepository {
     experienceId: number,
     updateExperienceData: UpdateExperienceDataDto,
   ): Promise<Experience>;
+  deleteExperience(experienceId: number): Promise<void>;
 }
