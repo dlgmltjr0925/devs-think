@@ -9,4 +9,5 @@ export interface ExperienceRepository {
     createExperienceData: CreateExperienceDataDto,
   ): Promise<Experience>;
   findExperienceById(experienceId: number): Promise<Experience | null>;
+  findExperiencesByUserId(userId: number): Promise<Experience[]>;
 }

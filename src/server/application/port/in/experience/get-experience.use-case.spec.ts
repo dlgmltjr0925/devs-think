@@ -70,4 +70,34 @@ describe("GetExperienceUseCase", () => {
       });
     });
   });
+
+  describe("getExperiencesByUserId", () => {
+    test("should return experiences", async () => {
+      // given
+      const createdExperiences =
+        await experienceTestFeature.createTestExperiences(testUser.id);
+
+      // when
+      const experiences = await getExperienceUseCase.getExperiencesByUserId(
+        testUser.id,
+      );
+
+      // then
+      expect(experiences).toBeDefined();
+      expect(experiences.length).toBe(createdExperiences.length);
+      experiences.forEach((experience) => {
+        const matchedExperience = createdExperiences.find(
+          (createdExperience) => createdExperience.id === experience.id,
+        );
+
+        if (!matchedExperience) {
+          throw new Error("Experience not found");
+        }
+
+        expect(
+          matchedExperience.skillIds.map((skillId) => skillId.value).sort(),
+        ).toStrictEqual(experience.skills.map((skill) => skill.id).sort());
+      });
+    });
+  });
 });

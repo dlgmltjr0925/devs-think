@@ -54,4 +54,22 @@ export class ExperienceService
 
     return ExperienceMapper.toDto(experience, skills);
   }
+
+  async getExperiencesByUserId(userId: number): Promise<ExperienceDto[]> {
+    const experiences =
+      await this.experienceRepository.findExperiencesByUserId(userId);
+
+    const skills = await this.skillRepository.findSkillsByIds(
+      experiences.flatMap((experience) =>
+        experience.skillIds.map((skillId) => skillId.value),
+      ),
+    );
+
+    return experiences.map((experience) => {
+      const experienceSkills = skills.filter((skill) =>
+        experience.skillIds.some((skillId) => skillId.value === skill.id),
+      );
+      return ExperienceMapper.toDto(experience, experienceSkills);
+    });
+  }
 }

@@ -27,4 +27,23 @@ export class ExperienceTestFeature {
       skillIds: skills.map((skill) => skill.id),
     });
   }
+
+  async createTestExperiences(userId: number): Promise<Experience[]> {
+    const skills = await Promise.all([
+      this.skillTestFeature.createTestSkill(userId, "react"),
+      this.skillTestFeature.createTestSkill(userId, "next.js"),
+      this.skillTestFeature.createTestSkill(userId, "nest.js"),
+    ]);
+
+    return Promise.all([
+      this.experienceRepository.createExperience(userId, {
+        ...mockCreateExperienceData,
+        skillIds: skills.slice(0, 2).map((skill) => skill.id),
+      }),
+      this.experienceRepository.createExperience(userId, {
+        ...mockCreateExperienceData,
+        skillIds: skills.slice(1, 3).map((skill) => skill.id),
+      }),
+    ]);
+  }
 }

@@ -90,6 +90,15 @@ export class ExperienceRepositoryAdapter implements ExperienceRepository {
     return ExperienceMapper.toDomain(experience);
   }
 
+  async findExperiencesByUserId(userId: number): Promise<Experience[]> {
+    const experiences = await this.prismaService.client.experience.findMany({
+      where: { userId, deletedAt: null },
+      include: this.include,
+    });
+
+    return experiences.map(ExperienceMapper.toDomain);
+  }
+
   private get include() {
     return {
       certificationDetail: true,
