@@ -113,6 +113,13 @@ export class EducationRepositoryAdapter implements EducationRepository {
     return EducationMapper.toDomain(education);
   }
 
+  async deleteEducation(educationId: number): Promise<void> {
+    await this.prismaService.client.education.update({
+      where: { id: educationId },
+      data: { deletedAt: new Date() },
+    });
+  }
+
   private get include() {
     return {
       medias: true,

@@ -15,4 +15,5 @@ export interface EducationRepository {
     educationId: number,
     updateEducationData: UpdateEducationDataDto,
   ): Promise<Education>;
+  deleteEducation(educationId: number): Promise<void>;
 }

@@ -68,6 +68,7 @@ import { ProjectRepositoryAdapter } from "~/server/adapter/out/persistence/proje
 import { CareerRepositoryAdapter } from "~/server/adapter/out/persistence/career";
 import { ExperienceRepositoryAdapter } from "~/server/adapter/out/persistence/experience";
 import { EducationRepositoryAdapter } from "~/server/adapter/out/persistence/education";
+import { DELETE_EDUCATION_USE_CASE } from "~/server/application/port/in/education/delete-education.use-case";
 
 export const di = container;
 
@@ -124,3 +125,4 @@ di.registerSingleton(DELETE_EXPERIENCE_USE_CASE, ExperienceService);
 di.registerSingleton(CREATE_EDUCATION_USE_CASE, EducationService);
 di.registerSingleton(GET_EDUCATION_USE_CASE, EducationService);
 di.registerSingleton(UPDATE_EDUCATION_USE_CASE, EducationService);
+di.registerSingleton(DELETE_EDUCATION_USE_CASE, EducationService);

@@ -16,10 +16,15 @@ import { EducationMapper } from "../mappers/education";
 import { SkillMapper } from "../mappers/skill";
 import { UpdateEducationDataDto } from "../dto/update-education-data.dto";
 import { ForbiddenError, NotFoundError } from "~/shared/error";
+import { DeleteEducationUseCase } from "../port/in/education/delete-education.use-case";
 
 @Injectable()
 export class EducationService
-  implements CreateEducationUseCase, GetEducationUseCase, UpdateEducationUseCase
+  implements
+    CreateEducationUseCase,
+    GetEducationUseCase,
+    UpdateEducationUseCase,
+    DeleteEducationUseCase
 {
   constructor(
     @Inject(EDUCATION_REPOSITORY)
@@ -110,5 +115,20 @@ export class EducationService
       updatedEducation,
       skills.map(SkillMapper.toDto),
     );
+  }
+
+  async deleteEducation(userId: number, educationId: number): Promise<void> {
+    const education =
+      await this.educationRepository.findEducationById(educationId);
+
+    if (!education) {
+      throw new NotFoundError();
+    }
+
+    if (education.userId !== userId) {
+      throw new ForbiddenError();
+    }
+
+    await this.educationRepository.deleteEducation(educationId);
   }
 }
