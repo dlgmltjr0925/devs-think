@@ -51,7 +51,14 @@ describe("CreateExperienceUseCase", () => {
         awardDetail: null,
         languageDetail: null,
         volunteerDetail: null,
-        medias: [],
+        medias: [
+          {
+            type: "Image",
+            url: "test",
+            title: "test",
+            description: "test",
+          },
+        ],
         skillIds: skills.map((skill) => skill.id),
       };
 
@@ -75,7 +82,23 @@ describe("CreateExperienceUseCase", () => {
       expect(experience.awardDetail).toBeNull();
       expect(experience.languageDetail).toBeNull();
       expect(experience.volunteerDetail).toBeNull();
-      expect(experience.medias).toStrictEqual(createExperienceData.medias);
+
+      experience.medias.forEach((media) => {
+        const matchedMedia = createExperienceData.medias.find(
+          (m) => m.title === media.title,
+        );
+        if (!matchedMedia) {
+          throw new Error("matchedMedia is null");
+        }
+        expect(media.url).toBe(matchedMedia.url);
+        expect(media.type).toBe(matchedMedia.type);
+        expect(media.title).toBe(matchedMedia.title);
+        expect(media.description).toBe(matchedMedia.description);
+      });
+
+      expect(experience.skills.map((skill) => skill.id).sort()).toStrictEqual(
+        skills.map((skill) => skill.id).sort(),
+      );
     });
   });
 });

@@ -6,6 +6,7 @@ import {
 import { Experience } from "~/server/domain/aggregate/experience";
 import { SkillTestFeature } from "../skill";
 import { mockCreateExperienceData } from "./mocks";
+import { CreateExperienceDataDto } from "../../dto/create-experience-data.dto";
 
 @Injectable()
 export class ExperienceTestFeature {
@@ -16,14 +17,17 @@ export class ExperienceTestFeature {
     private readonly skillTestFeature: SkillTestFeature,
   ) {}
 
-  async createTestExperience(userId: number): Promise<Experience> {
+  async createTestExperience(
+    userId: number,
+    mock: CreateExperienceDataDto = mockCreateExperienceData,
+  ): Promise<Experience> {
     const skills = await Promise.all([
       this.skillTestFeature.createTestSkill(userId, "react"),
       this.skillTestFeature.createTestSkill(userId, "next.js"),
     ]);
 
     return this.experienceRepository.createExperience(userId, {
-      ...mockCreateExperienceData,
+      ...mock,
       skillIds: skills.map((skill) => skill.id),
     });
   }

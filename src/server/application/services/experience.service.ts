@@ -2,6 +2,7 @@ import { Inject, Injectable } from "~/server/infra/core";
 import {
   CreateExperienceUseCase,
   GetExperienceUseCase,
+  UpdateExperienceUseCase,
 } from "../port/in/experience";
 import { CreateExperienceDataDto } from "../dto/create-experience-data.dto";
 import { ExperienceDto } from "../dto/experience.dto";
@@ -13,10 +14,14 @@ import {
 } from "../port/out/repositories";
 import { ExperienceMapper } from "../mappers/experience/experience.mapper";
 import { SkillMapper } from "../mappers/skill";
+import { UpdateExperienceDataDto } from "../dto/update-experience-data.dto";
 
 @Injectable()
 export class ExperienceService
-  implements CreateExperienceUseCase, GetExperienceUseCase
+  implements
+    CreateExperienceUseCase,
+    GetExperienceUseCase,
+    UpdateExperienceUseCase
 {
   constructor(
     @Inject(EXPERIENCE_REPOSITORY)
@@ -71,5 +76,36 @@ export class ExperienceService
       );
       return ExperienceMapper.toDto(experience, experienceSkills);
     });
+  }
+
+  async updateExperience(
+    userId: number,
+    experienceId: number,
+    updateExperienceData: UpdateExperienceDataDto,
+  ): Promise<ExperienceDto> {
+    const experience =
+      await this.experienceRepository.findExperienceById(experienceId);
+
+    if (!experience) {
+      throw new Error("Experience not found");
+    }
+
+    if (experience.userId !== userId) {
+      throw new Error("Experience not found");
+    }
+
+    const updatedExperience = await this.experienceRepository.updateExperience(
+      experienceId,
+      updateExperienceData,
+    );
+
+    const skills = await this.skillRepository.findSkillsByIds(
+      updatedExperience.skillIds.map((skillId) => skillId.value),
+    );
+
+    return ExperienceMapper.toDto(
+      updatedExperience,
+      skills.map(SkillMapper.toDto),
+    );
   }
 }

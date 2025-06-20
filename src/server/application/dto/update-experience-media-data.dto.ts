@@ -1,7 +1,6 @@
 import { ExperienceMediaTypeDto } from "./experience-media-type.dto";
 
-export class ExperienceMediaDto {
-  id: number;
+export class UpdateExperienceMediaDataDto {
   type: ExperienceMediaTypeDto;
   url: string;
   title: string | null;
