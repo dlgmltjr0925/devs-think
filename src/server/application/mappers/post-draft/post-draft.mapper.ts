@@ -1,4 +1,4 @@
-import { PostDraft } from "~/server/domain/entities/post-draft";
+import { PostDraft } from "~/server/domain/aggregate/post-draft";
 import { PostDraftDto } from "../../dto/post-draft.dto";
 
 export class PostDraftMapper {

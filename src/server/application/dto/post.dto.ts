@@ -8,7 +8,6 @@ export class PostDto {
   isPublic: boolean;
   userId: number;
   createdAt: Date;
-  publishedAt: Date | null;
   updatedAt: Date;
   deletedAt: Date | null;
 }

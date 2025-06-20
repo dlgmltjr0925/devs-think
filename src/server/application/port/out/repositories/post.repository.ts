@@ -1,7 +1,7 @@
 import { CreatePostDataDto } from "~/server/application/dto/create-post-data.dto";
 import { CursorBasedPaginationDto } from "~/server/application/dto/cursor-based-pagination.dto";
 import { UpdatePostDataDto } from "~/server/application/dto/update-post-data.dto";
-import { Post } from "~/server/domain/entities/post";
+import { Post } from "~/server/domain/aggregate/post";
 
 export const POST_REPOSITORY = Symbol.for("PostRepository");
 

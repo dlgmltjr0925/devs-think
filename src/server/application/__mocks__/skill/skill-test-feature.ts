@@ -1,4 +1,4 @@
-import { Skill } from "~/server/domain/entities/skill";
+import { Skill } from "~/server/domain/aggregate/skill";
 import { Inject, Injectable } from "~/server/infra/core";
 import {
   SKILL_REPOSITORY,

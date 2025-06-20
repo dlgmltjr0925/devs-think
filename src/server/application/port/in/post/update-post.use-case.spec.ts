@@ -5,7 +5,7 @@ import {
 } from "./update-post.use-case";
 import { di } from "~/server/infra/di";
 import { PostTestFeature } from "~/server/application/__mocks__/post";
-import { User } from "~/server/domain/user";
+import { User } from "~/server/domain/aggregate/user";
 import { UserTestFeature } from "~/server/application/__mocks__/user";
 import { UpdatePostDataDto } from "~/server/application/dto/update-post-data.dto";
 import { test } from "~/server/infra/test";

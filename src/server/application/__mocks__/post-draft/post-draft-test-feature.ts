@@ -2,7 +2,7 @@ import {
   POST_DRAFT_REPOSITORY,
   type PostDraftRepository,
 } from "~/server/application/port/out/repositories";
-import { PostDraft } from "~/server/domain/entities/post-draft";
+import { PostDraft } from "~/server/domain/aggregate/post-draft";
 import { Inject, Injectable } from "~/server/infra/core";
 import { mockCreatePostDraftData } from "./mocks";
 

@@ -1,6 +1,6 @@
 import { CreateSkillDataDto } from "~/server/application/dto/create-skill-data.dto";
 import { UpdateSkillDataDto } from "~/server/application/dto/update-skill-data.dto";
-import { Skill } from "~/server/domain/entities/skill/skill.entity";
+import { Skill } from "~/server/domain/aggregate/skill/skill.entity";
 
 export const SKILL_REPOSITORY = Symbol.for("SkillRepository");
 

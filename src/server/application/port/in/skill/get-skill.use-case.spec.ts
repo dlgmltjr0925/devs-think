@@ -2,7 +2,7 @@ import { beforeAll, describe, expect, it } from "vitest";
 import { GET_SKILL_USE_CASE, GetSkillUseCase } from "./get-skill.use-case";
 import { di } from "~/server/infra/di";
 import { test } from "~/server/infra/test";
-import { User } from "~/server/domain/user";
+import { User } from "~/server/domain/aggregate/user";
 import { UserTestFeature } from "~/server/application/__mocks__/user";
 import { SkillTestFeature } from "~/server/application/__mocks__/skill";
 

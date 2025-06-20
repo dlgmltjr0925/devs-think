@@ -3,7 +3,7 @@ import {
   POST_REPOSITORY,
   type PostRepository,
 } from "../../port/out/repositories";
-import { Post } from "~/server/domain/entities/post";
+import { Post } from "~/server/domain/aggregate/post";
 import { mockCreatePostData } from "./mocks";
 
 @Injectable()

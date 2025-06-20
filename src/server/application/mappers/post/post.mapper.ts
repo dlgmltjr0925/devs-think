@@ -1,4 +1,4 @@
-import { Post } from "~/server/domain/entities/post";
+import { Post } from "~/server/domain/aggregate/post";
 import { PostDto } from "../../dto/post.dto";
 
 export class PostMapper {
@@ -13,7 +13,6 @@ export class PostMapper {
       isPublic: post.isPublic,
       userId: post.userId,
       createdAt: post.createdAt,
-      publishedAt: post.publishedAt,
       updatedAt: post.updatedAt,
       deletedAt: post.deletedAt,
     };

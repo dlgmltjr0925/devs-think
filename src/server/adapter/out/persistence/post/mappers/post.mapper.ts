@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client";
-import { Post } from "~/server/domain/entities/post";
+import { Post } from "~/server/domain/aggregate/post";
 
 type PrismaPost = Prisma.PostGetPayload<{
   include: {
@@ -23,7 +23,6 @@ export class PostMapper {
       cleanUrl: post.cleanUrl,
       isPublic: post.isPublic,
       createdAt: post.createdAt,
-      publishedAt: post.publishedAt,
       updatedAt: post.updatedAt,
       deletedAt: post.deletedAt,
     });

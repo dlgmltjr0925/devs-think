@@ -8,7 +8,6 @@ interface PostConstructorArgs {
   isPublic: boolean;
   userId: number;
   createdAt: Date;
-  publishedAt: Date | null;
   updatedAt: Date;
   deletedAt: Date | null;
 }
@@ -23,7 +22,6 @@ export class Post {
   readonly isPublic: boolean;
   readonly userId: number;
   readonly createdAt: Date;
-  readonly publishedAt: Date | null;
   readonly updatedAt: Date;
   readonly deletedAt: Date | null;
 
@@ -37,7 +35,6 @@ export class Post {
     this.isPublic = args.isPublic;
     this.userId = args.userId;
     this.createdAt = args.createdAt;
-    this.publishedAt = args.publishedAt;
     this.updatedAt = args.updatedAt;
     this.deletedAt = args.deletedAt;
   }

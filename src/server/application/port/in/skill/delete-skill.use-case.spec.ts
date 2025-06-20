@@ -4,7 +4,7 @@ import {
   DeleteSkillUseCase,
 } from "./delete-skill.use-case";
 import { SkillTestFeature } from "~/server/application/__mocks__/skill";
-import { User } from "~/server/domain/user";
+import { User } from "~/server/domain/aggregate/user";
 import { di } from "~/server/infra/di";
 import { test } from "~/server/infra/test";
 import { UserTestFeature } from "~/server/application/__mocks__/user";
