@@ -14,15 +14,13 @@ export class TransactionContext {
   }
 
   static async run<T>(fn: () => Promise<T>): Promise<T> {
-    const client = di.resolve<PrismaService>(PRISMA_SERVICE);
+    const prismaService = di.resolve<PrismaService>(PRISMA_SERVICE);
 
-    return await client.$transaction(async (tx) => {
-      return await this.storage.run(
-        { client: tx as PrismaService },
-        async () => {
-          return await fn();
-        },
-      );
+    return await prismaService.$transaction(async (tx) => {
+      const client = tx as PrismaService;
+      return await this.storage.run({ client }, async () => {
+        return await fn();
+      });
     });
   }
 }

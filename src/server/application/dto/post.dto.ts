@@ -1,11 +1,9 @@
-import { PostDraftDto } from "./post-draft.dto";
-
 export class PostDto {
   id: number;
   title: string;
   content: string;
   tags: string[];
-  thumbnailUrl: string;
+  thumbnailUrl: string | null;
   cleanUrl: string | null;
   isPublic: boolean;
   userId: number;
@@ -13,6 +11,4 @@ export class PostDto {
   publishedAt: Date | null;
   updatedAt: Date;
   deletedAt: Date | null;
-
-  postDrafts: PostDraftDto[];
 }

@@ -1,4 +1,4 @@
-export class CreatePostDataDto {
+export class UpdatePostDataDto {
   title: string;
   content: string;
   tags: string[];

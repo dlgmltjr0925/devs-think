@@ -6,6 +6,8 @@ export const PRISMA_SERVICE = Symbol.for("PrismaService");
 
 @Injectable()
 export class PrismaService extends PrismaClient {
+  private instance: PrismaService;
+
   constructor() {
     super({
       log:
@@ -13,6 +15,8 @@ export class PrismaService extends PrismaClient {
           ? ["query", "error", "warn"]
           : ["error"],
     });
+
+    this.instance = this;
 
     this.onModuleInit();
   }
@@ -28,6 +32,6 @@ export class PrismaService extends PrismaClient {
   }
 
   get client(): PrismaService {
-    return TransactionContext.client ?? this;
+    return TransactionContext.client ?? this.instance;
   }
 }
