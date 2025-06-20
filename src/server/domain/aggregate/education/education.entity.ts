@@ -4,6 +4,7 @@ import { SkillId } from "./skill-id.entity";
 
 interface EducationConstructorArgs {
   id: number;
+  userId: number;
   schoolName: string;
   degree: EducationDegree;
   major: string;
@@ -22,6 +23,7 @@ interface EducationConstructorArgs {
 
 export class Education {
   id: number;
+  userId: number;
   schoolName: string;
   degree: EducationDegree;
   major: string;
@@ -37,21 +39,22 @@ export class Education {
 
   skillIds: SkillId[];
 
-  constructor(props: EducationConstructorArgs) {
-    this.id = props.id;
-    this.schoolName = props.schoolName;
-    this.degree = props.degree;
-    this.major = props.major;
-    this.startedAt = props.startedAt;
-    this.endedAt = props.endedAt;
-    this.gpa = props.gpa;
-    this.activities = props.activities;
-    this.description = props.description;
-    this.createdAt = props.createdAt;
-    this.updatedAt = props.updatedAt;
+  constructor(args: EducationConstructorArgs) {
+    this.id = args.id;
+    this.userId = args.userId;
+    this.schoolName = args.schoolName;
+    this.degree = args.degree;
+    this.major = args.major;
+    this.startedAt = args.startedAt;
+    this.endedAt = args.endedAt;
+    this.gpa = args.gpa;
+    this.activities = args.activities;
+    this.description = args.description;
+    this.createdAt = args.createdAt;
+    this.updatedAt = args.updatedAt;
 
-    this.medias = props.medias;
+    this.medias = args.medias;
 
-    this.skillIds = props.skillIds;
+    this.skillIds = args.skillIds;
   }
 }

@@ -5,7 +5,6 @@ import {
 } from "./update-experience.use-case";
 import {
   ExperienceTestFeature,
-  mockCreateExperienceData,
   mockCreateExperienceDataForNull,
 } from "~/server/application/__mocks__/experience";
 import { User } from "~/server/domain/aggregate/user";

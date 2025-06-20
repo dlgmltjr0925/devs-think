@@ -60,6 +60,7 @@ import {
 import {
   CREATE_EDUCATION_USE_CASE,
   GET_EDUCATION_USE_CASE,
+  UPDATE_EDUCATION_USE_CASE,
 } from "~/server/application/port/in/education";
 import { PostRepositoryAdapter } from "~/server/adapter/out/persistence/post";
 import { SkillRepositoryAdapter } from "~/server/adapter/out/persistence/skill";
@@ -122,3 +123,4 @@ di.registerSingleton(DELETE_EXPERIENCE_USE_CASE, ExperienceService);
 // education service
 di.registerSingleton(CREATE_EDUCATION_USE_CASE, EducationService);
 di.registerSingleton(GET_EDUCATION_USE_CASE, EducationService);
+di.registerSingleton(UPDATE_EDUCATION_USE_CASE, EducationService);

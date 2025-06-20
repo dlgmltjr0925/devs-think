@@ -4,6 +4,7 @@ import { Education } from "~/server/domain/aggregate/education";
 import { Inject, Injectable } from "~/server/infra/core";
 import { PRISMA_SERVICE, PrismaService } from "~/server/infra/database";
 import { EducationMapper } from "./mappers/education.mapper";
+import { UpdateEducationDataDto } from "~/server/application/dto/update-education-data.dto";
 
 @Injectable()
 export class EducationRepositoryAdapter implements EducationRepository {
@@ -69,6 +70,47 @@ export class EducationRepositoryAdapter implements EducationRepository {
     });
 
     return educations.map(EducationMapper.toDomain);
+  }
+
+  async updateEducation(
+    educationId: number,
+    updateEducationData: UpdateEducationDataDto,
+  ): Promise<Education> {
+    const education = await this.prismaService.education.update({
+      where: { id: educationId },
+      data: {
+        schoolName: updateEducationData.schoolName,
+        degree: updateEducationData.degree,
+        major: updateEducationData.major,
+        startedAt: updateEducationData.startedAt,
+        endedAt: updateEducationData.endedAt,
+        gpa: updateEducationData.gpa,
+        activities: updateEducationData.activities,
+        description: updateEducationData.description,
+        medias: {
+          deleteMany: {},
+          createMany: {
+            data: updateEducationData.medias.map((media) => ({
+              url: media.url,
+              type: media.type,
+              title: media.title,
+              description: media.description,
+            })),
+          },
+        },
+        skills: {
+          deleteMany: {},
+          createMany: {
+            data: updateEducationData.skillIds.map((skillId) => ({
+              skillId,
+            })),
+          },
+        },
+      },
+      include: this.include,
+    });
+
+    return EducationMapper.toDomain(education);
   }
 
   private get include() {

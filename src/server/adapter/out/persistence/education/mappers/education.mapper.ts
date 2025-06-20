@@ -17,6 +17,7 @@ export class EducationMapper {
   static toDomain(education: PrismaEducation): Education {
     return new Education({
       id: education.id,
+      userId: education.userId,
       schoolName: education.schoolName,
       degree: EducationDegree[education.degree],
       major: education.major,

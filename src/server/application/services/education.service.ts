@@ -2,6 +2,7 @@ import { Inject, Injectable } from "~/server/infra/core";
 import {
   CreateEducationUseCase,
   GetEducationUseCase,
+  UpdateEducationUseCase,
 } from "../port/in/education";
 import { CreateEducationDataDto } from "../dto/create-education-data.dto";
 import { EducationDto } from "../dto/education.dto";
@@ -13,10 +14,12 @@ import {
 } from "../port/out/repositories";
 import { EducationMapper } from "../mappers/education";
 import { SkillMapper } from "../mappers/skill";
+import { UpdateEducationDataDto } from "../dto/update-education-data.dto";
+import { ForbiddenError, NotFoundError } from "~/shared/error";
 
 @Injectable()
 export class EducationService
-  implements CreateEducationUseCase, GetEducationUseCase
+  implements CreateEducationUseCase, GetEducationUseCase, UpdateEducationUseCase
 {
   constructor(
     @Inject(EDUCATION_REPOSITORY)
@@ -76,5 +79,36 @@ export class EducationService
         educationSkills.map(SkillMapper.toDto),
       );
     });
+  }
+
+  async updateEducation(
+    userId: number,
+    educationId: number,
+    updateEducationData: UpdateEducationDataDto,
+  ): Promise<EducationDto> {
+    const education =
+      await this.educationRepository.findEducationById(educationId);
+
+    if (!education) {
+      throw new NotFoundError();
+    }
+
+    if (education.userId !== userId) {
+      throw new ForbiddenError();
+    }
+
+    const updatedEducation = await this.educationRepository.updateEducation(
+      educationId,
+      updateEducationData,
+    );
+
+    const skills = await this.skillRepository.findSkillsByIds(
+      updatedEducation.skillIds.map((skillId) => skillId.value),
+    );
+
+    return EducationMapper.toDto(
+      updatedEducation,
+      skills.map(SkillMapper.toDto),
+    );
   }
 }
