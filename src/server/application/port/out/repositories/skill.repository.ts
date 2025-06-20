@@ -11,6 +11,7 @@ export interface SkillRepository {
   ): Promise<Skill>;
   findSkillById(skillId: number): Promise<Skill | null>;
   findSkillsByUserId(userId: number): Promise<Skill[]>;
+  findSkillsByIds(skillIds: number[]): Promise<Skill[]>;
   updateSkill(
     skillId: number,
     updateSkillData: UpdateSkillDataDto,

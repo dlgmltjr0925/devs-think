@@ -1,3 +1,11 @@
+import { CreateExperienceDataDto } from "~/server/application/dto/create-experience-data.dto";
+import { Experience } from "~/server/domain/aggregate/experience";
+
 export const EXPERIENCE_REPOSITORY = Symbol("ExperienceRepository");
 
-export interface ExperienceRepository {}
+export interface ExperienceRepository {
+  createExperience(
+    userId: number,
+    createExperienceData: CreateExperienceDataDto,
+  ): Promise<Experience>;
+}

@@ -1,7 +1,7 @@
 import { SkillCategoryDto } from "./skill-category.dto";
 import { SkillLevelDto } from "./skill-level.dto";
 
-export class ConnectSkillDataDto {
+export class ConnectOrCreateSkillDataDto {
   id: number | null;
   name: string;
   description: string | null;

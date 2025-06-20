@@ -6,3 +6,5 @@ export { AwardDetail } from "./award-detail.entity";
 export { LanguageDetail } from "./language-detail.entity";
 export { VolunteerDetail } from "./volunteer-detail.entity";
 export { ExperienceMedia } from "./experience-media.entity";
+export { LanguageLevel } from "./language-level.enum";
+export { SkillId } from "./skill-id.entity";

@@ -1,4 +1,3 @@
-import { ConnectSkillDataDto } from "./connect-skill-data.dto";
 import { CreateAwardDetailDataDto } from "./create-award-detail-data.dto";
 import { CreateCertificationDetailDataDto } from "./create-certification-detail-data.dto";
 import { CreateExperienceMediaDataDto } from "./create-experience-media-data.dto";
@@ -23,5 +22,5 @@ export class CreateExperienceDataDto {
 
   medias: CreateExperienceMediaDataDto[];
 
-  skills: ConnectSkillDataDto[];
+  skillIds: number[];
 }
