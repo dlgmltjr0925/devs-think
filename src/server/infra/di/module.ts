@@ -53,7 +53,10 @@ import { PostRepositoryAdapter } from "~/server/adapter/out/persistence/post";
 import { SkillRepositoryAdapter } from "~/server/adapter/out/persistence/skill";
 import { ProjectRepositoryAdapter } from "~/server/adapter/out/persistence/project";
 import { CareerRepositoryAdapter } from "~/server/adapter/out/persistence/career";
-import { CREATE_EXPERIENCE_USE_CASE } from "~/server/application/port/in/experience";
+import {
+  CREATE_EXPERIENCE_USE_CASE,
+  GET_EXPERIENCE_USE_CASE,
+} from "~/server/application/port/in/experience";
 import { ExperienceRepositoryAdapter } from "~/server/adapter/out/persistence/experience";
 
 export const di = container;
@@ -102,6 +105,6 @@ di.registerSingleton(DELETE_CAREER_USE_CASE, CareerService);
 
 // experience service
 di.registerSingleton(CREATE_EXPERIENCE_USE_CASE, ExperienceService);
-// di.registerSingleton(GET_EXPERIENCE_USE_CASE, ExperienceService);
+di.registerSingleton(GET_EXPERIENCE_USE_CASE, ExperienceService);
 // di.registerSingleton(UPDATE_EXPERIENCE_USE_CASE, ExperienceService);
 // di.registerSingleton(DELETE_EXPERIENCE_USE_CASE, ExperienceService);

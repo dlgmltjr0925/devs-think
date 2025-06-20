@@ -77,6 +77,19 @@ export class ExperienceRepositoryAdapter implements ExperienceRepository {
     return ExperienceMapper.toDomain(experience);
   }
 
+  async findExperienceById(experienceId: number): Promise<Experience | null> {
+    const experience = await this.prismaService.client.experience.findUnique({
+      where: { id: experienceId, deletedAt: null },
+      include: this.include,
+    });
+
+    if (!experience) {
+      return null;
+    }
+
+    return ExperienceMapper.toDomain(experience);
+  }
+
   private get include() {
     return {
       certificationDetail: true,

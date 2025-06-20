@@ -1,5 +1,8 @@
 import { Inject, Injectable } from "~/server/infra/core";
-import { CreateExperienceUseCase } from "../port/in/experience";
+import {
+  CreateExperienceUseCase,
+  GetExperienceUseCase,
+} from "../port/in/experience";
 import { CreateExperienceDataDto } from "../dto/create-experience-data.dto";
 import { ExperienceDto } from "../dto/experience.dto";
 import {
@@ -12,7 +15,9 @@ import { ExperienceMapper } from "../mappers/experience/experience.mapper";
 import { SkillMapper } from "../mappers/skill";
 
 @Injectable()
-export class ExperienceService implements CreateExperienceUseCase {
+export class ExperienceService
+  implements CreateExperienceUseCase, GetExperienceUseCase
+{
   constructor(
     @Inject(EXPERIENCE_REPOSITORY)
     private readonly experienceRepository: ExperienceRepository,
@@ -33,5 +38,20 @@ export class ExperienceService implements CreateExperienceUseCase {
     );
 
     return ExperienceMapper.toDto(experience, skills.map(SkillMapper.toDto));
+  }
+
+  async getExperience(experienceId: number): Promise<ExperienceDto | null> {
+    const experience =
+      await this.experienceRepository.findExperienceById(experienceId);
+
+    if (!experience) {
+      return null;
+    }
+
+    const skills = await this.skillRepository.findSkillsByIds(
+      experience.skillIds.map((skillId) => skillId.value),
+    );
+
+    return ExperienceMapper.toDto(experience, skills);
   }
 }
