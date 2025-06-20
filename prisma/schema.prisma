@@ -340,11 +340,9 @@ model Education {
   updatedAt   DateTime        @updatedAt @map("updated_at")
   deletedAt   DateTime?       @map("deleted_at")
 
-  // 교육과정 중 사용한 기술 스택 관계
-  skills EducationSkillRelation[]
-
-  // 교육과정 관련 미디어
   medias EducationMedia[]
+
+  skills EducationSkillRelation[]
 
   @@map("educations")
 }

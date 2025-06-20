@@ -5,7 +5,6 @@ export class ExperienceMediaMapper {
   static toDto(experienceMedia: ExperienceMedia): ExperienceMediaDto {
     return {
       id: experienceMedia.id,
-      experienceId: experienceMedia.experienceId,
       url: experienceMedia.url,
       type: experienceMedia.type,
       title: experienceMedia.title,

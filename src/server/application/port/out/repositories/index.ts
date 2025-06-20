@@ -13,3 +13,7 @@ export {
   EXPERIENCE_REPOSITORY,
   type ExperienceRepository,
 } from "./experience.repository";
+export {
+  EDUCATION_REPOSITORY,
+  type EducationRepository,
+} from "./education.repository";
