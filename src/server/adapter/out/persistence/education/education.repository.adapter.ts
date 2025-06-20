@@ -49,6 +49,28 @@ export class EducationRepositoryAdapter implements EducationRepository {
     return EducationMapper.toDomain(education);
   }
 
+  async findEducationById(educationId: number): Promise<Education | null> {
+    const education = await this.prismaService.education.findUnique({
+      where: { id: educationId, deletedAt: null },
+      include: this.include,
+    });
+
+    if (!education) {
+      return null;
+    }
+
+    return EducationMapper.toDomain(education);
+  }
+
+  async findEducationsByUserId(userId: number): Promise<Education[]> {
+    const educations = await this.prismaService.education.findMany({
+      where: { userId, deletedAt: null },
+      include: this.include,
+    });
+
+    return educations.map(EducationMapper.toDomain);
+  }
+
   private get include() {
     return {
       medias: true,

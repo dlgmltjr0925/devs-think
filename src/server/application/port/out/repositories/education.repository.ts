@@ -8,4 +8,6 @@ export interface EducationRepository {
     userId: number,
     createEducationData: CreateEducationDataDto,
   ): Promise<Education>;
+  findEducationById(educationId: number): Promise<Education | null>;
+  findEducationsByUserId(userId: number): Promise<Education[]>;
 }
