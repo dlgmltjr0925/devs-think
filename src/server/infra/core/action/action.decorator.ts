@@ -3,6 +3,7 @@ import "reflect-metadata";
 import { BaseError } from "~/shared/error";
 import { ActionLogger } from "~/server/infra/core/logger";
 import { injectable } from "tsyringe";
+import { instanceToPlain } from "class-transformer";
 
 type Constructor<T = object> = new (...args: any[]) => T;
 
@@ -25,7 +26,7 @@ const wrapMethod = (target: any, methodName: string, originalMethod: any) => {
       try {
         const result = await originalMethod.apply(this, args);
         log();
-        return result;
+        return instanceToPlain(result);
       } catch (error: unknown) {
         log(error as Error);
         return throwErrorToResponse(error);

@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { Injectable } from "~/server/infra/core";
+import { TransactionContext } from "../transaction/transaction-context";
 
 export const PRISMA_SERVICE = Symbol.for("PrismaService");
 
@@ -13,8 +14,6 @@ export class PrismaService extends PrismaClient {
           : ["error"],
     });
 
-    console.log("PrismaService constructor");
-
     this.onModuleInit();
   }
 
@@ -26,5 +25,9 @@ export class PrismaService extends PrismaClient {
     }
 
     await this.$connect();
+  }
+
+  get client(): PrismaService {
+    return TransactionContext.client ?? this;
   }
 }

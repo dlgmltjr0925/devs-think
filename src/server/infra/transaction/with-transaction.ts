@@ -1,11 +1,11 @@
 import { TransactionContext } from "./transaction-context";
 
-export const withTransaction = async (
+export const withTransaction = (
   fn: (...args: unknown[]) => unknown | Promise<unknown>,
-) => {
-  return async function () {
+): ((...args: unknown[]) => Promise<unknown>) => {
+  return async function (...args: unknown[]) {
     await TransactionContext.run(async () => {
-      return await fn();
+      return await fn(...args);
     });
   };
 };

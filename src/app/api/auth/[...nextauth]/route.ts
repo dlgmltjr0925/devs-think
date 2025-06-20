@@ -1,7 +1,7 @@
 import { di } from "~/server/infra/di";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth from "next-auth";
-import { AdapterAccount } from "next-auth/adapters";
+import { AdapterAccount, AdapterUser } from "next-auth/adapters";
 import GithubProvider from "next-auth/providers/github";
 import { PRISMA_SERVICE, PrismaService } from "~/server/infra/database";
 
@@ -25,6 +25,14 @@ const handler = NextAuth({
   adapter: {
     ...PrismaAdapter(prismaService),
     linkAccount,
+    getUser: async (id: string) => {
+      const user = await prismaService.user.findUnique({
+        where: {
+          id: Number(id),
+        },
+      });
+      return user as unknown as AdapterUser;
+    },
   },
   providers: [
     GithubProvider({
@@ -41,6 +49,12 @@ const handler = NextAuth({
     // error: '/auth/error',
     // verifyRequest: '/auth/verify-request',
     // newUser: '/auth/new-user'
+  },
+  callbacks: {
+    async signIn({ user, account, profile, email, credentials }) {
+      console.log(user, account, profile, email, credentials);
+      return true;
+    },
   },
 });
 

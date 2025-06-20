@@ -5,6 +5,7 @@
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
+    "strictPropertyInitialization": false,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
@@ -23,7 +24,7 @@
       "~/client/shared/*": ["./src/client/shared/*"],
       "~/server/adapter/*": ["./src/server/adapter/*"],
       "~/server/application/*": ["./src/server/application/*"],
-      "~/server/domains/*": ["./src/server/domains/*"],
+      "~/server/domain/*": ["./src/server/domain/*"],
       "~/server/infra/*": ["./src/server/infra/*"],
       "~/shared/*": ["./src/shared/*"],
       "~/*": ["./src/client/*"]

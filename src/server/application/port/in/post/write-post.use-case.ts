@@ -1,0 +1,12 @@
+import { PostDto } from "~/server/application/dto/post.dto";
+import { CreatePostDraftDataDto } from "~/server/application/dto/create-post-draft-data.dto";
+
+export const WRITE_POST_USE_CASE = Symbol.for("WritePostUseCase");
+
+export interface WritePostUseCase {
+  createPostDraft(
+    userId: number,
+    createPostDraftData: CreatePostDraftDataDto,
+  ): Promise<PostDto>;
+  // publishPost(post: CreatePostDataDto): PostDto;
+}
