@@ -5,6 +5,7 @@ import { PRISMA_SERVICE, PrismaService } from "../database/prisma.service";
 import { PostService } from "~/server/application/services/post.service";
 import {
   CAREER_REPOSITORY,
+  EXPERIENCE_REPOSITORY,
   POST_DRAFT_REPOSITORY,
   POST_REPOSITORY,
   PROJECT_REPOSITORY,
@@ -40,6 +41,7 @@ import {
   ProjectService,
   SkillService,
   CareerService,
+  ExperienceService,
 } from "~/server/application/services";
 import {
   CREATE_CAREER_USE_CASE,
@@ -47,10 +49,17 @@ import {
   GET_CAREER_USE_CASE,
   UPDATE_CAREER_USE_CASE,
 } from "~/server/application/port/in/career";
+import {
+  CREATE_EXPERIENCE_USE_CASE,
+  DELETE_EXPERIENCE_USE_CASE,
+  GET_EXPERIENCE_USE_CASE,
+  UPDATE_EXPERIENCE_USE_CASE,
+} from "~/server/application/port/in/experience";
 import { PostRepositoryAdapter } from "~/server/adapter/out/persistence/post";
 import { SkillRepositoryAdapter } from "~/server/adapter/out/persistence/skill";
 import { ProjectRepositoryAdapter } from "~/server/adapter/out/persistence/project";
 import { CareerRepositoryAdapter } from "~/server/adapter/out/persistence/career";
+import { ExperienceRepositoryAdapter } from "~/server/adapter/out/persistence/experience";
 
 export const di = container;
 
@@ -63,6 +72,7 @@ di.registerSingleton(POST_REPOSITORY, PostRepositoryAdapter);
 di.registerSingleton(SKILL_REPOSITORY, SkillRepositoryAdapter);
 di.registerSingleton(PROJECT_REPOSITORY, ProjectRepositoryAdapter);
 di.registerSingleton(CAREER_REPOSITORY, CareerRepositoryAdapter);
+di.registerSingleton(EXPERIENCE_REPOSITORY, ExperienceRepositoryAdapter);
 
 // Service Providers
 // post draft service
@@ -94,3 +104,9 @@ di.registerSingleton(CREATE_CAREER_USE_CASE, CareerService);
 di.registerSingleton(GET_CAREER_USE_CASE, CareerService);
 di.registerSingleton(UPDATE_CAREER_USE_CASE, CareerService);
 di.registerSingleton(DELETE_CAREER_USE_CASE, CareerService);
+
+// experience service
+di.registerSingleton(CREATE_EXPERIENCE_USE_CASE, ExperienceService);
+di.registerSingleton(GET_EXPERIENCE_USE_CASE, ExperienceService);
+di.registerSingleton(UPDATE_EXPERIENCE_USE_CASE, ExperienceService);
+di.registerSingleton(DELETE_EXPERIENCE_USE_CASE, ExperienceService);

@@ -55,6 +55,17 @@ export class SkillRepositoryAdapter implements SkillRepository {
     return skills.map(SkillMapper.toDomain);
   }
 
+  async findSkillsByIds(skillIds: number[]): Promise<Skill[]> {
+    const skills = await this.prismaService.skill.findMany({
+      where: {
+        id: { in: skillIds },
+        deletedAt: null,
+      },
+    });
+
+    return skills.map(SkillMapper.toDomain);
+  }
+
   async updateSkill(
     skillId: number,
     updateSkillData: UpdateSkillDataDto,

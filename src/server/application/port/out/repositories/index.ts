@@ -9,3 +9,7 @@ export {
   type ProjectRepository,
 } from "./project.repository";
 export { CAREER_REPOSITORY, type CareerRepository } from "./career.repository";
+export {
+  EXPERIENCE_REPOSITORY,
+  type ExperienceRepository,
+} from "./experience.repository";
