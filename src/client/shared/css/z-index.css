@@ -1,0 +1,14 @@
+@theme inline {
+  --z-mobile-stepper: 1000;
+  --z-fab: 1050;
+  --z-speed-dial: 1050;
+  --z-app-bar: 1100;
+  --z-drawer: 1200;
+  --z-modal: 1300;
+  --z-snackbar: 1400;
+  --z-tooltip: 1500;
+}
+
+@utility z-* {
+  z-index: --value(--z-*);
+}

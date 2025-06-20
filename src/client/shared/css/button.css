@@ -1,0 +1,120 @@
+@theme inline {
+  --button-variant-disabled-background-text: transparent;
+  --button-variant-disabled-color-text: var(--color-text-disabled);
+  --button-variant-disabled-border-text: transparent 1px solid;
+
+  --button-variant-disabled-background-contained: var(--color-text-disabled);
+  --button-variant-disabled-color-contained: var(--color-text-disabled);
+  --button-variant-disabled-border-contained: transparent 1px solid;
+
+  --button-variant-disabled-background-outlined: transparent;
+  --button-variant-disabled-color-outlined: var(--color-text-disabled);
+  --button-variant-disabled-border-outlined: var(--color-text-disabled) 1px solid;
+
+  --button-focus-ring-color: var(--color-primary);
+
+  --button-color-primary: var(--color-primary);
+  --button-color-secondary: var(--color-secondary);
+  --button-color-error: var(--color-error);
+  --button-color-warning: var(--color-warning);
+  --button-color-success: var(--color-success);
+  --button-color-info: var(--color-info);
+  --button-color-default: var(--color-foreground);
+  --button-color-contrast-text-primary: var(--color-primary-contrast-text);
+  --button-color-contrast-text-secondary: var(--color-secondary-contrast-text);
+  --button-color-contrast-text-error: var(--color-error-contrast-text);
+  --button-color-contrast-text-warning: var(--color-warning-contrast-text);
+  --button-color-contrast-text-success: var(--color-success-contrast-text);
+  --button-color-contrast-text-info: var(--color-info-contrast-text);
+
+  --button-size-padding-small: 0.25rem 0.625rem;
+  --button-size-padding-medium: 0.375rem 1rem;
+  --button-size-padding-large: 0.5rem 1.375rem;
+  --button-size-font-size-small: var(--text-sm);
+  --button-size-font-size-medium: var(--text-base);
+  --button-size-font-size-large: var(--text-lg);
+
+  --icon-button-size-padding-small: 0.5rem;
+  --icon-button-size-padding-medium: 0.625rem;
+  --icon-button-size-padding-large: 0.75rem;
+
+  --icon-button-size-font-size-small: var(--text-lg);
+  --icon-button-size-font-size-medium: var(--text-xl);
+  --icon-button-size-font-size-large: var(--text-2xl);
+}
+
+@utility button-* {
+  @apply relative inline-flex items-center justify-center gap-2 rounded-md cursor-pointer size-fit uppercase typo-button box-border transition-colors duration-200;
+
+  &:disabled {
+    background: --value(--button-variant-disabled-background-*) !important;
+    color: --value(--button-variant-disabled-color-*) !important;
+    border: --value(--button-variant-disabled-border-*) !important;
+  }
+  &:focus-visible {
+    outline: 1px solid var(--button-focus-ring-color);
+  }
+}
+
+@utility button-text-* {
+  background: transparent;
+  color: --value(--button-color-*);
+  border: transparent 1px solid;
+  &:hover {
+    background: color-mix(in srgb, --value(--button-color-*) 10%, transparent);
+  }
+  &:active {
+    background: color-mix(in srgb, --value(--button-color-*) 20%, transparent);
+  }
+}
+
+@utility button-contained-* {
+  background: --value(--button-color-*);
+  color: --value(--button-color-contrast-text-*);
+  border: transparent 1px solid;
+  &:hover {
+    background: color-mix(in srgb, --value(--button-color-*) 90%, transparent); 
+  }
+  &:active {
+    background: color-mix(in srgb, --value(--button-color-*) 80%, transparent);
+  }
+}
+
+@utility button-outlined-* {
+  background: transparent;
+  color: --value(--button-color-*);
+  border: --value(--button-color-*) 1px solid;
+  &:hover {
+    background: color-mix(in srgb, --value(--button-color-*) 10%, transparent);
+  }
+  &:active {
+    background: color-mix(in srgb, --value(--button-color-*) 20%, transparent);
+  }
+}
+
+@utility button-size-* {
+  padding: --value(--button-size-padding-*);
+  font-size: --value(--button-size-font-size-*);
+}
+
+@utility icon-button {
+  @apply rounded-full min-w-0 min-h-0;
+}
+
+@utility icon-button-color-* {
+  color: --value(--button-color-*) !important;
+  &:hover {
+    background: color-mix(in srgb, --value(--button-color-*) 10%, transparent);
+  }
+  &:active {
+    background: color-mix(in srgb, --value(--button-color-*) 20%, transparent);
+  }
+}
+
+@utility icon-button-size-* {
+  padding: --value(--icon-button-size-padding-*) !important;
+  svg {
+    width: --value(--icon-button-size-font-size-*) !important;
+    height: --value(--icon-button-size-font-size-*) !important;
+  }
+}

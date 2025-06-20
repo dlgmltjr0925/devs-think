@@ -1,5 +1,47 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Project Structure
+
+```
+.
+├── .git/
+├── .next/
+├── node_modules/
+├── public/
+├── src/
+│   ├── app/                    # Next.js App Router
+│   │   ├── page.tsx           # Main page component
+│   │   ├── layout.tsx         # Root layout component
+│   │   ├── globals.css        # Global styles
+│   │   └── favicon.ico        # Site favicon
+│   │
+│   ├── client/                # Client-side code
+│   │   ├── app/              # Client application setup
+│   │   ├── pages/            # Page components
+│   │   ├── widgets/          # Reusable widget components
+│   │   ├── features/         # Feature-specific components
+│   │   ├── entities/         # Business entity components
+│   │   └── shared/           # Client-side shared utilities
+│   │
+│   ├── server/               # Server-side code
+│   │   ├── domains/         # Domain logic and entities
+│   │   ├── application/     # Application services
+│   │   ├── adapter/         # External service adapters
+│   │   └── infra/           # Infrastructure setup
+│   │
+│   └── shared/              # Shared code between client and server
+│
+├── .gitignore
+├── eslint.config.mjs
+├── next-env.d.ts
+├── next.config.ts
+├── package.json
+├── package-lock.json
+├── postcss.config.mjs
+├── README.md
+└── tsconfig.json
+```
+
 ## Getting Started
 
 First, run the development server:
